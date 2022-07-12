@@ -1,0 +1,72 @@
+name: web_admin
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.2
+  # myplus:
+  #       path: ../
+  # 屏幕适配
+  shared_preferences: ^2.0.15
+  # 满足密码需求
+  flutter_pw_validator: ^1.4.2
+  flutter_screenutil: ^1.0.2
+  syncfusion_flutter_charts: ^20.1.56
+  # 二维码
+  syncfusion_flutter_barcodes: ^20.1.57
+  # syncfusion_flutter_datagrid: ^20.1.56
+
+  # 地图
+  # syncfusion_flutter_maps: ^20.1.57
+  # 手写签名
+  syncfusion_flutter_signaturepad: ^20.1.57
+  # 手写签名
+  # scribble: ^0.4.0
+  # flutter_state_notifier: ^0.7.1
+  # pdf查看 
+  # syncfusion_flutter_pdfviewer: ^20.1.57-beta
+  # open_file: ^3.2.1
+  # path_provider: ^2.0.10
+  # syncfusion_flutter_pdf: ^20.1.57-beta
+
+  # 本地存储
+  # hive: ^2.2.1   
+
+
+  # Flutter Screenutil
+  # flutter_chat_ui 聊天ui
+  # Flutter Staggered Gridview瀑布流
+  # introduction_screen 3.0.2切换屏幕
+  # TimelineTile 树立事件
+  # Smooth star rating评星
+  # smooth_page_indicator 页面翻转按钮
+  # liquid_progress_indicator 0.4.0  温度计特效
+  # Flutter Slidable
+  # pull_to_refresh 2.0.0
+  # Badges  数字标记
+  # Pinput
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/images/
+    # - assets/images/bg.jpg  
+    - world_map.json
+    - australia.json
