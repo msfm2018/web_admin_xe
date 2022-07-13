@@ -162,45 +162,13 @@ class _Example3State extends State<Login> {
                             width: 400,
                             height: 150,
                             onSuccess: () {
-                              //点击登陆打印username.text的值即可
-                              showDialog<void>(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text("提示"),
-                                    content: SingleChildScrollView(
-                                      child: ListBody(
-                                        children: const <Widget>[
-                                          Text('密码正确'),
-                                          Text('可以登录'),
-                                        ],
-                                      ),
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('确定'),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ).then((val) {
-                                // print(val);
-                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text("密码符合要求")));
                               btnEnabled = true;
                               setState(() {});
-                              // print("MATCHED");
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //     new SnackBar(
-                              //         content:
-                              //             new Text("Password is matched")));
                             },
                             onFail: () {
                               btnEnabled = false;
-                              // print("NOT MATCHED");
                             },
                           ),
                           Container(
@@ -241,26 +209,6 @@ class _Example3State extends State<Login> {
                         ],
                       ),
                     ),
-                    // Positioned(
-                    //     top: -60,
-                    //     child: Container(
-                    //       width: 300,
-                    //       height: 200,
-                    //       child: Row(
-                    //         mainAxisAlignment: MainAxisAlignment.center,
-                    //         children: const <Widget>[
-                    //           CircleAvatar(
-                    //               radius: 40.0,
-                    //               backgroundColor: Colors.transparent,
-                    //               child: Image(
-                    //                 image: AssetImage(
-                    //                     'assets/images/feature-1.png'),
-                    //                 fit: BoxFit.fill,
-                    //               ) // Icon(Icons.person),
-                    //               ),
-                    //         ],
-                    //       ),
-                    //     )),
                   ],
                 )),
           ),

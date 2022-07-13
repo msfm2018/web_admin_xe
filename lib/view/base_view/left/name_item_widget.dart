@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../mgr.dart';
-import '../name_bean.dart';
+import '../../../view_config/name_bean.dart';
 
 class NameItemWidget extends StatefulWidget {
   final NameBean bean;
@@ -14,31 +14,55 @@ class NameItemWidget extends StatefulWidget {
 class _NameItemWidgetState extends State<NameItemWidget> {
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: _buildItem(widget.bean),
-    );
+    return StreamBuilder(
+        stream: Mgr().colorControler.stream,
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          return ListTile(
+            title: _buildItem(widget.bean),
+          );
+        });
   }
 
   Widget _buildItem(NameBean bean) {
     if (bean.children.isEmpty) {
-      return ListTile(
-        title: Text(bean.name),
-        onTap: () {
-          // _showSeletedName(bean.name);
-          // Mgr().openedTabPageList.forEach(
-          //       (element) {
-
-          //       },
-          //     );
-
-          // Mgr().vView[bean.name];
-          if ((!Mgr().openedTabPageList.contains(bean.name)) &&
-              (Mgr().vView[bean.name] != null)) {
-            Mgr().openedTabPageList.add(bean.name);
-          }
-          Mgr().idControler.add(bean.name);
-        },
-      );
+      return Mgr().selectedNodeName == bean.name
+          ? ListTile(
+              dense: true,
+              title: Container(
+                height: 50,
+                alignment: Alignment.center,
+                color: Colors.green.withOpacity(0.5),
+                child: Text(
+                  bean.name,
+                ),
+              ),
+              enabled: true,
+              onTap: () {
+                if ((!Mgr().openedTabPageList.contains(bean.name)) &&
+                    (Mgr().vView[bean.name] != null)) {
+                  Mgr().openedTabPageList.add(bean.name);
+                }
+                Mgr().selectedNodeName = bean.name;
+                Mgr().idControlerAction.add(bean.name);
+                Mgr().idControler.add(bean.name);
+                Mgr().colorControler.add(bean.name);
+              },
+            )
+          : ListTile(
+              title: Text(
+                bean.name,
+              ),
+              onTap: () {
+                if ((!Mgr().openedTabPageList.contains(bean.name)) &&
+                    (Mgr().vView[bean.name] != null)) {
+                  Mgr().openedTabPageList.add(bean.name);
+                }
+                Mgr().selectedNodeName = bean.name;
+                Mgr().idControlerAction.add(bean.name);
+                Mgr().idControler.add(bean.name);
+                Mgr().colorControler.add(bean.name);
+              },
+            );
     }
 
     return ExpansionTile(
@@ -57,8 +81,8 @@ class _NameItemWidgetState extends State<NameItemWidget> {
     );
   }
 
-  _showSeletedName(String name) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("选择的是：$name")));
-  }
+  // _showSeletedName(String name) {
+  //   ScaffoldMessenger.of(context)
+  //       .showSnackBar(SnackBar(content: Text("选择的是：$name")));
+  // }
 }

@@ -12,24 +12,20 @@ class _LaySettingState extends State<LaySetting> {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        padding: EdgeInsets.zero,
         children: const <Widget>[
           DrawerHeader(
-            child: Text('Text(S.of(context).mySettings)'),
-            // decoration: BoxDecoration(
-            //   color: Get.theme.primaryColor,
-            // ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            child: Text('头测试'),
           ),
           ListTile(
-            title: Text('S.of(context).language'),
-            // trailing: LangSwitch(),
+            title: Text(
+              'body',
+              style: TextStyle(color: Colors.white),
+            ),
+            trailing: Icon(Icons.wallet),
           ),
-          Divider(thickness: 1),
-          Divider(thickness: 1),
-          ListTile(
-            title: Text('Text(S.of(context).nightMode)'),
-          ),
-          Divider(thickness: 1),
         ],
       ),
     );

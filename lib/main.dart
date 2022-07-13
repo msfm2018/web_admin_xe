@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'constans/constans.dart';
 import 'home.dart';
+import 'not_found.dart';
+import 'view/base_view/login.dart';
 
 Future<void> main() async {
   /// 确保初始化
@@ -36,21 +38,40 @@ class MyApp extends StatelessWidget {
     ///树展开
 
     return MaterialApp(
-      title: title,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        textTheme: AppTheme.textTheme,
-        platform: TargetPlatform.iOS,
-        canvasColor: Colors.transparent,
-        textSelectionTheme:
-            const TextSelectionThemeData(cursorColor: Colors.green),
-        scaffoldBackgroundColor: AppTheme.notWhite,
-      ),
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/': (context) => const Home(),
-        // '/': (context) => Login(),
-      },
+        title: title,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          textTheme: AppTheme.textTheme,
+          platform: TargetPlatform.iOS,
+          canvasColor: Colors.transparent,
+          textSelectionTheme:
+              const TextSelectionThemeData(cursorColor: Colors.green),
+          scaffoldBackgroundColor: AppTheme.notWhite,
+        ),
+        debugShowCheckedModeBanner: false,
+        initialRoute: 'login',
+        onGenerateRoute: _routeGenerator);
+  }
+
+  /// 实现路由守卫
+  Route _routeGenerator(RouteSettings settings) {
+    print('实现路由守卫::::::::' + settings.name.toString());
+    final name = settings.name;
+    var builder = routeList[name];
+    builder ??= (content) => const NotFound();
+    // 用户权限认证的逻辑处理
+
+    // 构建动态的route
+    final route = MaterialPageRoute(
+      builder: builder,
+      settings: settings,
     );
+    return route;
   }
 }
+
+Map<String, WidgetBuilder> routeList = {
+  "notFound": (content) => const NotFound(),
+  "login": (content) => const Login(),
+  // "main": (content) => const Home(),
+};

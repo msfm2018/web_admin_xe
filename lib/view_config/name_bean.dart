@@ -7,6 +7,9 @@ class NameBean {
 }
 
 final List<NameBean> data = <NameBean>[
+  NameBean('中国'),
+  NameBean('老挝'),
+  NameBean('越南'),
   NameBean('直辖市', [
     NameBean('北京'),
     NameBean(
@@ -129,4 +132,7 @@ final List<NameBean> data = <NameBean>[
       '澳门',
     ),
   ]),
+  NameBean(
+    '澳大利亚',
+  ),
 ];

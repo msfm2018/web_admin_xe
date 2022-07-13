@@ -1,24 +1,17 @@
-/// @author: cairuoyu
-/// @homepage: http://cairuoyu.com
-/// @github: https://github.com/cairuoyu/flutter_admin
-/// @date: 2021/8/18
-/// @version: 1.0
-/// @description:
-
 import 'package:flutter/material.dart';
 
-class IndexedStackLazy extends StatefulWidget {
+class IndexedStackWrapper extends StatefulWidget {
   final int index;
   final List<Widget> children;
 
-  IndexedStackLazy({Key? key, this.index = 0, required this.children})
+  IndexedStackWrapper({Key? key, this.index = 0, required this.children})
       : super(key: key);
 
   @override
-  _IndexedStackLazyState createState() => _IndexedStackLazyState();
+  _IndexedStackWrapperState createState() => _IndexedStackWrapperState();
 }
 
-class _IndexedStackLazyState extends State<IndexedStackLazy> {
+class _IndexedStackWrapperState extends State<IndexedStackWrapper> {
   List<Widget> children = <Widget>[];
   int index = 0;
 
@@ -29,7 +22,7 @@ class _IndexedStackLazyState extends State<IndexedStackLazy> {
   }
 
   @override
-  void didUpdateWidget(covariant IndexedStackLazy oldWidget) {
+  void didUpdateWidget(covariant IndexedStackWrapper oldWidget) {
     List<Widget> newChildren = <Widget>[];
     for (int i = 0; i < widget.children.length; i++) {
       var w = widget.children[i];

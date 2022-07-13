@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'name_item_widget.dart';
-import '../name_bean.dart';
+import '../../../view_config/name_bean.dart';
 
 class MultiNamePage extends StatefulWidget {
   const MultiNamePage({Key? key}) : super(key: key);
@@ -19,10 +19,7 @@ class _MultiNamePageState extends State<MultiNamePage> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      // 长度
       itemCount: data.length,
-
-      // 遍历
       itemBuilder: (BuildContext context, int index) {
         return NameItemWidget(data[index]);
       },
