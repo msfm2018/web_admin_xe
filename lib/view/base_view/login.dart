@@ -63,7 +63,6 @@ class _Example3State extends State<Login> {
 
     return Scaffold(
       backgroundColor: co,
-      // appBar: AppBar(),
       body: Center(
         child: FocusScope(
           node: node,
@@ -176,6 +175,7 @@ class _Example3State extends State<Login> {
                             alignment: Alignment.bottomCenter,
                             child: SizedBox(
                               width: 420,
+                              height: 50,
                               child: TextButton(
                                 onPressed: btnState(btnEnabled),
                                 style: ButtonStyle(
@@ -200,6 +200,8 @@ class _Example3State extends State<Login> {
                                     style: TextStyle(
                                         color:
                                             Color.fromARGB(255, 255, 255, 255),
+                                        fontFamily: "Avenir",
+                                        fontWeight: FontWeight.normal,
                                         fontSize: 20)),
                               ),
                             ),
