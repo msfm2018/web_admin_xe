@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ServiceCard extends StatefulWidget {
+  const ServiceCard({super.key});
+
   @override
-  _ServiceCardState createState() => _ServiceCardState();
+  ServiceCardState createState() => ServiceCardState();
 }
 
-class _ServiceCardState extends State<ServiceCard> {
+class ServiceCardState extends State<ServiceCard> {
   bool isHover = false;
   Duration duration = const Duration(milliseconds: 200);
   @override

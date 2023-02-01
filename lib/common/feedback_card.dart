@@ -7,13 +7,13 @@ const kTextLightColor = Color(0xFF555555);
 const kDefaultPadding = 20.0;
 
 final kDefaultShadow = BoxShadow(
-  offset: Offset(0, 50),
+  offset: const Offset(0, 50),
   blurRadius: 50,
-  color: Color(0xFF0700B1).withOpacity(0.15),
+  color: const Color(0xFF0700B1).withOpacity(0.15),
 );
 
 final kDefaultCardShadow = BoxShadow(
-  offset: Offset(0, 20),
+  offset: const Offset(0, 20),
   blurRadius: 50,
   color: Colors.black.withOpacity(0.1),
 );
@@ -34,12 +34,14 @@ final kDefaultCardShadow = BoxShadow(
 // );
 
 class FeedbackCard extends StatefulWidget {
+  const FeedbackCard({super.key});
+
   @override
-  _FeedbackCardState createState() => _FeedbackCardState();
+  FeedbackCardState createState() => FeedbackCardState();
 }
 
-class _FeedbackCardState extends State<FeedbackCard> {
-  Duration duration = Duration(milliseconds: 200);
+class FeedbackCardState extends State<FeedbackCard> {
+  Duration duration = const Duration(milliseconds: 200);
   bool isHover = false;
   @override
   Widget build(BuildContext context) {
@@ -53,12 +55,12 @@ class _FeedbackCardState extends State<FeedbackCard> {
       },
       child: AnimatedContainer(
         duration: duration,
-        margin: EdgeInsets.only(top: kDefaultPadding * 3),
-        padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+        margin: const EdgeInsets.only(top: kDefaultPadding * 3),
+        padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
         // height: double.infinity,
         width: 350,
         decoration: BoxDecoration(
-          color: Color(0xFFFFF3DD),
+          color: const Color(0xFFFFF3DD),
           border: Border.all(width: 2, color: Colors.black),
           borderRadius: BorderRadius.circular(10),
           boxShadow: [if (isHover) kDefaultCardShadow],

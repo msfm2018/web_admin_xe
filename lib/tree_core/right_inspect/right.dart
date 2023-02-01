@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-import '../mgr.dart';
-import '../../../component/utils/indexed_stack_wrapper.dart';
+import '../core.dart';
+import '../../common/utils/indexed_stack_wrapper.dart';
 
 class Right extends StatefulWidget {
   const Right({Key? key}) : super(key: key);
@@ -33,7 +33,7 @@ class RightState extends State<Right> with TickerProviderStateMixin {
 
   StreamBuilder<String> viewBuild() {
     return StreamBuilder(
-        stream: Mgr().idControler.stream,
+        stream: Core().idControler.stream,
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container(); // const CircularProgressIndicator();
@@ -43,22 +43,22 @@ class RightState extends State<Right> with TickerProviderStateMixin {
               return const Text('Error');
             } else if (snapshot.hasData) {
               int currentIndex =
-                  Mgr().openedTabPageList.indexOf(snapshot.data.toString());
+                  Core().openedTabPageList.indexOf(snapshot.data.toString());
               if (currentIndex == -1) {
-                if (Mgr().openedTabPageList.isNotEmpty) {
+                if (Core().openedTabPageList.isNotEmpty) {
                   currentIndex = 0;
                 }
               }
 
-              return Mgr().openedTabPageList.isEmpty
+              return Core().openedTabPageList.isEmpty
                   ? const Text('首页')
-                  : Mgr().vView[snapshot.data.toString()] == null
+                  : Core().pages[snapshot.data.toString()] == null
                       ? const Text('暂时没有页面对应')
                       : IndexedStackWrapper(
                           index: currentIndex,
-                          children: Mgr().openedTabPageList.map((e) {
+                          children: Core().openedTabPageList.map((e) {
                             return KeyedSubtree(
-                                key: Key(e), child: Mgr().vView[e] as Widget);
+                                key: Key(e), child: Core().pages[e] as Widget);
                           }).toList(),
                         );
             } else {
@@ -90,7 +90,7 @@ class RightState extends State<Right> with TickerProviderStateMixin {
     }
 
     return StreamBuilder(
-        stream: Mgr().idControlerAction.stream,
+        stream: Core().idControlerAction.stream,
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container();
@@ -110,7 +110,9 @@ class RightState extends State<Right> with TickerProviderStateMixin {
                     child: Row(
                       children: [
                         //标题快捷按钮
-                        for (var i = 0; i < Mgr().openedTabPageList.length; i++)
+                        for (var i = 0;
+                            i < Core().openedTabPageList.length;
+                            i++)
                           Container(
 
                               ///每个按钮限制的高度
@@ -118,9 +120,9 @@ class RightState extends State<Right> with TickerProviderStateMixin {
                               margin:
                                   const EdgeInsets.only(left: 6.0, right: 6.0),
                               decoration: BoxDecoration(
-                                color: Mgr().openedTabPageList[i] ==
-                                        Mgr().selectedNodeName
-                                    ? Mgr().selectedColor
+                                color: Core().openedTabPageList[i] ==
+                                        Core().selectedNodeName
+                                    ? Core().selectedColor
                                     : Colors.deepOrange[100],
                                 borderRadius:
                                     const BorderRadius.all(Radius.circular(4)),
@@ -150,7 +152,7 @@ class RightState extends State<Right> with TickerProviderStateMixin {
                                                 MaterialStateProperty.all(
                                                     Colors.transparent)),
                                         child: Text(
-                                          Mgr().openedTabPageList[i],
+                                          Core().openedTabPageList[i],
                                           style: const TextStyle(
                                               fontFamily: 'WorkSans',
                                               letterSpacing: 0.2,
@@ -159,11 +161,13 @@ class RightState extends State<Right> with TickerProviderStateMixin {
                                               fontSize: 12),
                                         ),
                                         onPressed: () {
-                                          String k = Mgr().openedTabPageList[i];
-                                          Mgr().idControler.add(k);
-                                          Mgr().selectedNodeName = k;
-                                          Mgr().idControlerAction.add(k);
-                                          Mgr().colorControler.add(k);
+                                          String k =
+                                              Core().openedTabPageList[i];
+
+                                          Core().idControler.add(k);
+                                          Core().selectedNodeName = k;
+                                          Core().idControlerAction.add(k);
+                                          Core().btnControler.add(k);
                                         }),
                                   ),
 
@@ -176,25 +180,26 @@ class RightState extends State<Right> with TickerProviderStateMixin {
                                             color: Colors.white,
                                             onPressed: () {
                                               String k =
-                                                  Mgr().openedTabPageList[i];
-                                              Mgr().openedTabPageList.remove(k);
+                                                  Core().openedTabPageList[i];
+                                              Core()
+                                                  .openedTabPageList
+                                                  .remove(k);
 
-                                              if (Mgr()
-                                                      .openedTabPageList
-                                                      .length >
-                                                  0) {
-                                                k = Mgr().openedTabPageList[
-                                                    Mgr()
+                                              if (Core()
+                                                  .openedTabPageList
+                                                  .isNotEmpty) {
+                                                k = Core().openedTabPageList[
+                                                    Core()
                                                             .openedTabPageList
                                                             .length -
                                                         1];
-                                                Mgr().selectedNodeName = k;
-                                                Mgr().colorControler.add(k);
-                                                Mgr().idControler.add(k);
-                                                Mgr().idControlerAction.add(k);
+                                                Core().selectedNodeName = k;
+                                                Core().btnControler.add(k);
+                                                Core().idControler.add(k);
+                                                Core().idControlerAction.add(k);
                                               } else {
-                                                Mgr().idControler.add(k);
-                                                Mgr().idControlerAction.add(k);
+                                                Core().idControler.add(k);
+                                                Core().idControlerAction.add(k);
                                               }
                                             },
                                             icon: const Icon(

@@ -1,138 +1,138 @@
-class NameBean {
+class DataBean {
   final String name;
-  final List<NameBean> children;
+  final List<DataBean> children;
 
   // children 默认初始化
-  NameBean(this.name, [this.children = const <NameBean>[]]);
+  DataBean(this.name, [this.children = const <DataBean>[]]);
 }
 
-final List<NameBean> data = <NameBean>[
-  NameBean('中国'),
-  NameBean('老挝'),
-  NameBean('越南'),
-  NameBean('直辖市', [
-    NameBean('北京'),
-    NameBean(
+final List<DataBean> data = <DataBean>[
+  DataBean('中国'),
+  DataBean('老挝'),
+  DataBean('越南'),
+  DataBean('直辖市', [
+    DataBean('北京'),
+    DataBean(
       '上海',
     ),
-    NameBean(
+    DataBean(
       '天津',
     ),
-    NameBean(
+    DataBean(
       '重庆',
     ),
   ]),
-  NameBean('自治区', [
-    NameBean(
+  DataBean('自治区', [
+    DataBean(
       '新疆',
     ),
-    NameBean(
+    DataBean(
       '西藏',
     ),
-    NameBean(
+    DataBean(
       '广西',
     ),
-    NameBean(
+    DataBean(
       '宁夏',
     ),
-    NameBean(
+    DataBean(
       '内蒙古',
     ),
   ]),
-  NameBean('省级行政单位', [
-    NameBean('黑龙江', [
-      NameBean(
+  DataBean('省级行政单位', [
+    DataBean('黑龙江', [
+      DataBean(
         '哈尔滨',
       ),
-      NameBean(
+      DataBean(
         '大庆',
       ),
-      NameBean(
+      DataBean(
         '齐齐哈尔',
       ),
-      NameBean(
+      DataBean(
         '佳木斯',
       ),
     ]),
-    NameBean(
+    DataBean(
       '吉林',
     ),
-    NameBean(
+    DataBean(
       '辽宁',
     ),
-    NameBean(
+    DataBean(
       '河北',
     ),
-    NameBean(
+    DataBean(
       '山东',
     ),
-    NameBean(
+    DataBean(
       '江苏',
     ),
-    NameBean(
+    DataBean(
       '安徽',
     ),
-    NameBean(
+    DataBean(
       '浙江',
     ),
-    NameBean(
+    DataBean(
       '福建',
     ),
-    NameBean(
+    DataBean(
       '广东',
     ),
-    NameBean(
+    DataBean(
       '海南',
     ),
-    NameBean(
+    DataBean(
       '云南',
     ),
-    NameBean(
+    DataBean(
       '湖南',
     ),
-    NameBean(
+    DataBean(
       '贵州',
     ),
-    NameBean(
+    DataBean(
       '四川',
     ),
-    NameBean(
+    DataBean(
       '湖北',
     ),
-    NameBean(
+    DataBean(
       '河南',
     ),
-    NameBean(
+    DataBean(
       '山西',
     ),
-    NameBean(
+    DataBean(
       '河南',
     ),
-    NameBean(
+    DataBean(
       '陕西',
     ),
-    NameBean(
+    DataBean(
       '甘肃',
     ),
-    NameBean(
+    DataBean(
       '青海',
     ),
-    NameBean(
+    DataBean(
       '江西',
     ),
-    NameBean(
+    DataBean(
       '台湾',
     ),
   ]),
-  NameBean('特别行政区', <NameBean>[
-    NameBean(
+  DataBean('特别行政区', <DataBean>[
+    DataBean(
       '香港',
     ),
-    NameBean(
+    DataBean(
       '澳门',
     ),
   ]),
-  NameBean(
+  DataBean(
     '澳大利亚',
   ),
 ];

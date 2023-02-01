@@ -2,9 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'constans/constans.dart';
-import 'home.dart';
 import 'not_found.dart';
-import 'view/base_view/login.dart';
+import 'login.dart';
 
 Future<void> main() async {
   /// 确保初始化
@@ -23,10 +22,6 @@ Future<void> main() async {
     );
   };
 
-  // await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
-  //   DeviceOrientation.portraitUp,
-  //   DeviceOrientation.portraitDown
-  // ])
   runApp(const MyApp());
 }
 
@@ -40,13 +35,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: title,
         theme: ThemeData(
+          useMaterial3: true,
           primarySwatch: Colors.blue,
           textTheme: AppTheme.textTheme,
           platform: TargetPlatform.iOS,
+          // 防止组合按钮被覆盖
           canvasColor: Colors.transparent,
           textSelectionTheme:
               const TextSelectionThemeData(cursorColor: Colors.green),
-          scaffoldBackgroundColor: AppTheme.notWhite,
+          scaffoldBackgroundColor: const Color.fromARGB(255, 221, 230, 236),
         ),
         debugShowCheckedModeBanner: false,
         initialRoute: 'login',
@@ -55,7 +52,9 @@ class MyApp extends StatelessWidget {
 
   /// 实现路由守卫
   Route _routeGenerator(RouteSettings settings) {
-    print('实现路由守卫::::::::' + settings.name.toString());
+    if (kDebugMode) {
+      print('on guard::::::::${settings.name}');
+    }
     final name = settings.name;
     var builder = routeList[name];
     builder ??= (content) => const NotFound();

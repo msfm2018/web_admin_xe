@@ -14,7 +14,7 @@ class _MyHomePageState extends State<TestIndexStack> {
   void initState() {
     super.initState();
 
-    lst.addAll([f1(), f2(), f3()]);
+    lst.addAll(const [F1(), F2(), F3()]);
   }
 
   getW(ix) {
@@ -23,7 +23,7 @@ class _MyHomePageState extends State<TestIndexStack> {
 
   void _incrementCounter() {
     lst.clear();
-    lst.addAll([f1(), f2(), f3()]);
+    lst.addAll(const [F1(), F2(), F3()]);
   }
 
   @override
@@ -44,29 +44,29 @@ class _MyHomePageState extends State<TestIndexStack> {
 
                   setState(() {});
                 },
-                child: Text('f1')),
+                child: const Text('F1')),
             ElevatedButton(
                 onPressed: () {
                   i = 1;
 
                   setState(() {});
                 },
-                child: Text('f2')),
+                child: const Text('F2')),
             ElevatedButton(
                 onPressed: () {
                   i = 2;
 
                   setState(() {});
                 },
-                child: Text('f3')),
+                child: const Text('F3')),
             ElevatedButton(
                 onPressed: () {
-                  // lst.remove(f2());
+                  // lst.remove(F2());
                   lst.removeAt(1);
 
                   setState(() {});
                 },
-                child: Text('del f2')),
+                child: const Text('del F2')),
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -74,7 +74,7 @@ class _MyHomePageState extends State<TestIndexStack> {
                       MaterialPageRoute<void>(
                           builder: (BuildContext context) => const MyWidget()));
                 },
-                child: Text('页面跳转')),
+                child: const Text('页面跳转')),
           ],
         ),
       ),
@@ -87,23 +87,23 @@ class _MyHomePageState extends State<TestIndexStack> {
   }
 }
 
-class f1 extends StatefulWidget {
-  const f1({Key? key}) : super(key: key);
+class F1 extends StatefulWidget {
+  const F1({Key? key}) : super(key: key);
 
   @override
-  State<f1> createState() => _f1State();
+  State<F1> createState() => _F1State();
 }
 
-class _f1State extends State<f1> {
+class _F1State extends State<F1> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(30),
+      margin: const EdgeInsets.all(30),
       alignment: Alignment.center,
       child: Column(
         children: [
-          Text("f1 页面"),
-          SizedBox(
+          const Text("F1 页面"),
+          const SizedBox(
             height: 30,
           ),
           TextField(
@@ -115,7 +115,7 @@ class _f1State extends State<f1> {
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               // icon: Icon(Icons.person),
-              hintText: 'f1观察页面跳转 返回数据有无变化',
+              hintText: 'F1观察页面跳转 返回数据有无变化',
               suffixIcon: IconButton(
                 ///跳过焦点
                 focusNode: FocusNode(skipTraversal: true),
@@ -130,23 +130,23 @@ class _f1State extends State<f1> {
   }
 }
 
-class f2 extends StatefulWidget {
-  const f2({Key? key}) : super(key: key);
+class F2 extends StatefulWidget {
+  const F2({Key? key}) : super(key: key);
 
   @override
-  State<f2> createState() => _f2State();
+  State<F2> createState() => _F2State();
 }
 
-class _f2State extends State<f2> {
+class _F2State extends State<F2> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(30),
+      margin: const EdgeInsets.all(30),
       alignment: Alignment.center,
       child: Column(
         children: [
-          Text("f2 页面"),
-          SizedBox(
+          const Text("F2 页面"),
+          const SizedBox(
             height: 30,
           ),
           TextField(
@@ -158,7 +158,7 @@ class _f2State extends State<f2> {
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               // icon: Icon(Icons.person),
-              hintText: 'f2观察页面跳转 返回数据有无变化',
+              hintText: 'F2观察页面跳转 返回数据有无变化',
               suffixIcon: IconButton(
                 ///跳过焦点
                 focusNode: FocusNode(skipTraversal: true),
@@ -173,23 +173,23 @@ class _f2State extends State<f2> {
   }
 }
 
-class f3 extends StatefulWidget {
-  const f3({Key? key}) : super(key: key);
+class F3 extends StatefulWidget {
+  const F3({Key? key}) : super(key: key);
 
   @override
-  State<f3> createState() => _f3State();
+  State<F3> createState() => _F3State();
 }
 
-class _f3State extends State<f3> {
+class _F3State extends State<F3> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(30),
+      margin: const EdgeInsets.all(30),
       alignment: Alignment.center,
       child: Column(
         children: [
-          Text("f3 页面"),
-          SizedBox(
+          const Text("F3 页面"),
+          const SizedBox(
             height: 30,
           ),
           TextField(
@@ -201,7 +201,7 @@ class _f3State extends State<f3> {
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               // icon: Icon(Icons.person),
-              hintText: 'f3观察页面跳转 返回数据有无变化',
+              hintText: 'F3观察页面跳转 返回数据有无变化',
               suffixIcon: IconButton(
                 ///跳过焦点
                 focusNode: FocusNode(skipTraversal: true),
@@ -229,7 +229,7 @@ class _MyHomePageState1 extends State<MyWidget> {
     return Scaffold(
         appBar: AppBar(),
         body: Column(
-          children: [
+          children: const [
             Text('data'),
             Text('data1'),
             Text('data2'),

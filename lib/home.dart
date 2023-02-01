@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:web_admin/view/base_view/left/left.dart';
+import 'package:web_admin/tree_core/left_items/left.dart';
 
-import 'constans/constans.dart';
-import 'view/base_view/lay_setting.dart';
-import 'view/base_view/login.dart';
-import 'view/base_view/right/right.dart';
+import 'login.dart';
+import 'tree_core/right_inspect/right.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _HomeState createState() => _HomeState();
+  HomeState createState() => HomeState();
 }
 
-class _HomeState extends State {
+class HomeState extends State {
   final GlobalKey<ScaffoldState> scaffoldStateKey = GlobalKey<ScaffoldState>();
-  final GlobalKey<RightState> layoutCenterKey = GlobalKey<RightState>();
 
   @override
   void initState() {
@@ -26,7 +22,8 @@ class _HomeState extends State {
   get _drawer => Drawer(
         child: Center(
             child: Column(
-          children: [
+          children: const [
+            Text('data'),
             DrawerHeader(
                 child: Text(
               'header',
@@ -39,30 +36,42 @@ class _HomeState extends State {
           ],
         )),
       );
+  Drawer _endDrawer() {
+    return Drawer(
+      child: ListView(
+        children: const <Widget>[
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            child: Text('头测试'),
+          ),
+          ListTile(
+            title: Text(
+              'body',
+              style: TextStyle(color: Colors.white),
+            ),
+            trailing: Icon(Icons.wallet),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldStateKey,
       drawer: _drawer,
-      endDrawer: const LaySetting(),
-      body: Row(
-        children: <Widget>[
-          const Left(),
-          const VerticalDivider(
-            width: 2,
-            color: Colors.black12,
-            thickness: 2,
-          ),
-          Right(key: layoutCenterKey),
-        ],
-      ),
+      endDrawer: _endDrawer(),
+      body: const TreeWidget(),
       appBar: getAppBar(),
     );
   }
 
   getAppBar() {
     return AppBar(
-      backgroundColor: AppTheme.dismissibleBackground,
+      backgroundColor: const Color.fromARGB(255, 202, 219, 228),
       automaticallyImplyLeading: false,
       leading: Tooltip(
           message: '主页',
@@ -73,7 +82,7 @@ class _HomeState extends State {
             },
           )),
       title: Row(children: const [
-        Text('后台管理框架'),
+        Text('后台管理框架', style: TextStyle(color: Colors.white)),
       ]),
       actions: <Widget>[
         Tooltip(
@@ -89,6 +98,8 @@ class _HomeState extends State {
           onSelected: (dynamic v) {
             switch (v) {
               case 'exit':
+                //首先清除缓存数据
+                //  退出到登录窗口
                 Navigator.pushAndRemoveUntil<void>(
                   context,
                   MaterialPageRoute<void>(
@@ -108,6 +119,27 @@ class _HomeState extends State {
             ),
           ],
         ),
+      ],
+    );
+  }
+}
+
+class TreeWidget extends StatelessWidget {
+  const TreeWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: const <Widget>[
+        Left(),
+        VerticalDivider(
+          width: 2,
+          color: Colors.black12,
+          thickness: 2,
+        ),
+        Right(),
       ],
     );
   }

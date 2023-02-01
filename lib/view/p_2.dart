@@ -47,7 +47,7 @@ class P2 extends StatelessWidget {
         ClipRRect(
             //裁剪出来的是矩形
             borderRadius: BorderRadius.circular(20),
-            child: Container(
+            child: SizedBox(
                 height: 150,
                 width: 150,
                 child: Image.network(

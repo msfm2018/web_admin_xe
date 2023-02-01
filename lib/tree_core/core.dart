@@ -2,37 +2,37 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import '../../view_config/config.dart';
+import '../view_config/config.dart';
 
 typedef Wb<T> = Widget Function(T);
 
 ///树的管理者
-class Mgr extends State {
-  Mgr._() {
+class Core extends State {
+  Core._() {
     _instance = this;
 
     /// 配对数据
-    vView = <String, Widget>{};
-    vViewAction = <String, Widget>{};
+    pages = <String, Widget>{};
+    // pagesAction = <String, Widget>{};
 
     openedTabPageList = <String>[];
 
     ///
     idControler = StreamController.broadcast();
     idControlerAction = StreamController.broadcast();
-    colorControler = StreamController.broadcast();
+    btnControler = StreamController.broadcast();
     Config.init();
   }
 
-  static Mgr? _instance;
-  factory Mgr() {
-    return _instance ??= Mgr._();
+  static Core? _instance;
+  factory Core() {
+    return _instance ??= Core._();
   }
 
-  static Mgr get instance => _getInstance();
+  static Core get instance => _getInstance();
 
-  static Mgr _getInstance() {
-    return _instance ?? Mgr._();
+  static Core _getInstance() {
+    return _instance ?? Core._();
   }
 
   bool isAllExpanded = false;
@@ -41,7 +41,7 @@ class Mgr extends State {
   late StreamController<String> idControler;
 
   late StreamController<String> idControlerAction;
-  late StreamController<String> colorControler;
+  late StreamController<String> btnControler;
 
   late List<String> openedTabPageList;
 
@@ -51,10 +51,10 @@ class Mgr extends State {
 
   ///----------------------------------------------------
   ///页面临时pageView
-  late Map<String, Widget> vView;
+  late Map<String, Widget> pages;
 
   ///内存节点快捷按钮
-  late Map<String, Widget> vViewAction;
+  // late Map<String, Widget> pagesAction;
 
   ///------------------------------------------------------
   @override

@@ -1,8 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../component/values/colors.dart';
+import '../common/values/colors.dart';
 
 class P3Data {
   var myTitle = 'mytitile';
@@ -10,19 +11,17 @@ class P3Data {
 }
 
 class P3 extends StatefulWidget {
-  P3(this.name, {this.key}) : super(key: key);
+  P3(this.name, {Key? key}) : super(key: key);
 
   String name = '';
 
-  Key? key;
-
   @override
-  State<P3> createState() => _P3State();
+  P3State createState() => P3State();
 }
 
-class _P3State extends State<P3> {
+class P3State extends State<P3> {
   StreamController<String> ss = StreamController();
-  P3Data? p3_data;
+  P3Data? p3Data;
   @override
   void dispose() {
     ss.close();
@@ -31,12 +30,11 @@ class _P3State extends State<P3> {
 
   @override
   void didChangeDependencies() {
-    var tt =
-        PageStorage.of(context)!.readState(context, identifier: widget.key);
+    var tt = PageStorage.of(context).readState(context, identifier: widget.key);
     if (tt != null) {
-      p3_data = tt;
+      p3Data = tt;
     } else {
-      p3_data = P3Data();
+      p3Data = P3Data();
     }
     super.didChangeDependencies();
   }
@@ -72,7 +70,7 @@ class _P3State extends State<P3> {
                   stream: ss.stream,
                   initialData: '---',
                   builder: (context, snapshot) {
-                    return Text(p3_data == null ? "" : p3_data!.myTitle);
+                    return Text(p3Data == null ? "" : p3Data!.myTitle);
                     //  return Text(m(widget.name) == null ? "" : m(widget.name).myTitle);
                   }),
               const SizedBox(
@@ -88,15 +86,14 @@ class _P3State extends State<P3> {
                   //m(widget.name).i++;
 
                   ///系统自带方法数据持久化
-                  p3_data!.myTitle = "我CAO " + p3_data!.i.toString();
+                  p3Data!.myTitle = "我CAO ${p3Data!.i}";
 
-                  p3_data!.i++;
-                  ss.add(p3_data!.myTitle);
+                  p3Data!.i++;
+                  ss.add(p3Data!.myTitle);
 
-                  PageStorage.of(context)!
-                      .writeState(context, p3_data, identifier: widget.key);
+                  PageStorage.of(context)
+                      .writeState(context, p3Data, identifier: widget.key);
                 },
-                child: const Text('测试页面切换数据持久化'),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.resolveWith((states) {
                     if (states.contains(MaterialState.hovered)) {
@@ -109,6 +106,7 @@ class _P3State extends State<P3> {
                         borderRadius: BorderRadius.circular(6.0)),
                   ),
                 ),
+                child: const Text('测试页面切换数据持久化333'),
               ),
             ],
           ),
@@ -118,7 +116,7 @@ class _P3State extends State<P3> {
           onPressed: btnState(false),
           disabledColor: Colors.grey,
           color: Colors.red,
-          child: Text('禁用按钮'),
+          child: const Text('禁用按钮'),
         ),
       ],
     );
@@ -127,10 +125,14 @@ class _P3State extends State<P3> {
   btnState(f) {
     if (f) {
       return () {
-        print("you");
+        if (kDebugMode) {
+          print("you");
+        }
       };
     } else {
-      print('空');
+      if (kDebugMode) {
+        print('null');
+      }
       return null;
     }
   }

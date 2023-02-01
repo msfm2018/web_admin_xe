@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../component/utils/keep_alive_wrapper.dart';
-import '../component/utils/utils.dart';
+import '../common/utils/keep_alive_wrapper.dart';
+import '../common/utils/utils.dart';
 
 class KeepLive extends StatefulWidget {
   const KeepLive({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class _KeepLiveState extends State<KeepLive> {
       decoration: BoxDecoration(
           border: Border.all(width: 1, color: Colors.red),
           gradient: GradientUtil.blue()),
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       child: Column(children: [
         const Padding(
             padding: EdgeInsets.all(30.0),
@@ -71,7 +71,7 @@ class _Stemp2State extends State<Stemp2> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [Text('测试')],
+      children: const [Text('测试')],
     );
   }
 }
@@ -81,10 +81,10 @@ class SAreaAgeGenderMain extends StatefulWidget {
   const SAreaAgeGenderMain({Key? key}) : super(key: key);
 
   @override
-  _SAreaAgeGenderMainState createState() => _SAreaAgeGenderMainState();
+  SAreaAgeGenderMainState createState() => SAreaAgeGenderMainState();
 }
 
-class _SAreaAgeGenderMainState extends State<SAreaAgeGenderMain>
+class SAreaAgeGenderMainState extends State<SAreaAgeGenderMain>
     with SingleTickerProviderStateMixin {
 //
   bool isPointRadiusMapper = false;
@@ -100,8 +100,8 @@ class _SAreaAgeGenderMainState extends State<SAreaAgeGenderMain>
       initialIndex: 0,
     );
     tabList = [
-      Tab(text: '页面1'),
-      Tab(text: '页面2'),
+      const Tab(text: '页面1'),
+      const Tab(text: '页面2'),
     ];
     tabViewList = [
       const KeepAliveWrapper(child: KeepLive()),

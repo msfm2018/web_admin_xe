@@ -30,9 +30,9 @@ class P1 extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     "Building a WhatsApp Clone  $index",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text(
+                  const Text(
                     '12:34',
                     style: TextStyle(color: Colors.grey, fontSize: 14.0),
                   ),

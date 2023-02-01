@@ -1,17 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class IndexedStackWrapper extends StatefulWidget {
   final int index;
   final List<Widget> children;
 
-  IndexedStackWrapper({Key? key, this.index = 0, required this.children})
+  const IndexedStackWrapper({Key? key, this.index = 0, required this.children})
       : super(key: key);
 
   @override
-  _IndexedStackWrapperState createState() => _IndexedStackWrapperState();
+  IndexedStackWrapperState createState() => IndexedStackWrapperState();
 }
 
-class _IndexedStackWrapperState extends State<IndexedStackWrapper> {
+class IndexedStackWrapperState extends State<IndexedStackWrapper> {
   List<Widget> children = <Widget>[];
   int index = 0;
 
@@ -39,7 +40,9 @@ class _IndexedStackWrapperState extends State<IndexedStackWrapper> {
       }
     }
     children = newChildren;
-    print('IndexedStack状态：：' + children.toString());
+    if (kDebugMode) {
+      print('IndexedStack状态：：$children');
+    }
     super.didUpdateWidget(oldWidget);
   }
 

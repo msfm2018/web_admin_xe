@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'multi_name_page.dart';
+import 'multi_item_page.dart';
 
 class Left extends StatefulWidget {
   const Left({Key? key}) : super(key: key);

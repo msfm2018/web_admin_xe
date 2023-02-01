@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import '../mgr.dart';
-import '../../../view_config/name_bean.dart';
+import '../core.dart';
+import '../../view_config/data_bean.dart';
 
-class NameItemWidget extends StatefulWidget {
-  final NameBean bean;
-  const NameItemWidget(this.bean, {Key? key}) : super(key: key);
+class ItemPage extends StatefulWidget {
+  final DataBean bean;
+  const ItemPage(this.bean, {Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _NameItemWidgetState createState() => _NameItemWidgetState();
+  ItemPageState createState() => ItemPageState();
 }
 
-class _NameItemWidgetState extends State<NameItemWidget> {
+class ItemPageState extends State<ItemPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: Mgr().colorControler.stream,
+        stream: Core().btnControler.stream,
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           return ListTile(
             title: _buildItem(widget.bean),
@@ -23,9 +22,9 @@ class _NameItemWidgetState extends State<NameItemWidget> {
         });
   }
 
-  Widget _buildItem(NameBean bean) {
+  Widget _buildItem(DataBean bean) {
     if (bean.children.isEmpty) {
-      return Mgr().selectedNodeName == bean.name
+      return Core().selectedNodeName == bean.name
           ? ListTile(
               dense: true,
               title: Container(
@@ -38,14 +37,14 @@ class _NameItemWidgetState extends State<NameItemWidget> {
               ),
               enabled: true,
               onTap: () {
-                if ((!Mgr().openedTabPageList.contains(bean.name)) &&
-                    (Mgr().vView[bean.name] != null)) {
-                  Mgr().openedTabPageList.add(bean.name);
+                if ((!Core().openedTabPageList.contains(bean.name)) &&
+                    (Core().pages[bean.name] != null)) {
+                  Core().openedTabPageList.add(bean.name);
                 }
-                Mgr().selectedNodeName = bean.name;
-                Mgr().idControlerAction.add(bean.name);
-                Mgr().idControler.add(bean.name);
-                Mgr().colorControler.add(bean.name);
+                Core().selectedNodeName = bean.name;
+                Core().idControlerAction.add(bean.name);
+                Core().idControler.add(bean.name);
+                Core().btnControler.add(bean.name);
               },
             )
           : ListTile(
@@ -53,20 +52,20 @@ class _NameItemWidgetState extends State<NameItemWidget> {
                 bean.name,
               ),
               onTap: () {
-                if ((!Mgr().openedTabPageList.contains(bean.name)) &&
-                    (Mgr().vView[bean.name] != null)) {
-                  Mgr().openedTabPageList.add(bean.name);
+                if ((!Core().openedTabPageList.contains(bean.name)) &&
+                    (Core().pages[bean.name] != null)) {
+                  Core().openedTabPageList.add(bean.name);
                 }
-                Mgr().selectedNodeName = bean.name;
-                Mgr().idControlerAction.add(bean.name);
-                Mgr().idControler.add(bean.name);
-                Mgr().colorControler.add(bean.name);
+                Core().selectedNodeName = bean.name;
+                Core().idControlerAction.add(bean.name);
+                Core().idControler.add(bean.name);
+                Core().btnControler.add(bean.name);
               },
             );
     }
 
     return ExpansionTile(
-      key: PageStorageKey<NameBean>(bean),
+      key: PageStorageKey<DataBean>(bean),
       title: Text(
         bean.name,
       ),
