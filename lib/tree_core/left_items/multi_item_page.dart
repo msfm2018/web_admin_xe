@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'item_page.dart';
-import '../../view_config/data_bean.dart';
+import '../../tree_config/data_bean.dart';
 
 class MultiNamePage extends StatefulWidget {
   const MultiNamePage({Key? key}) : super(key: key);

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:web_admin/tree_core/left_items/left.dart';
 
 import 'login.dart';
-import 'tree_core/right_inspect/right.dart';
+import 'tree_core/tree.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -71,7 +70,7 @@ class HomeState extends State {
 
   getAppBar() {
     return AppBar(
-      backgroundColor: const Color.fromARGB(255, 202, 219, 228),
+      backgroundColor: const Color.fromARGB(255, 117, 155, 119),
       automaticallyImplyLeading: false,
       leading: Tooltip(
           message: '主页',
@@ -102,8 +101,7 @@ class HomeState extends State {
                 //  退出到登录窗口
                 Navigator.pushAndRemoveUntil<void>(
                   context,
-                  MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const Login()),
+                  MaterialPageRoute<void>(builder: (BuildContext context) => const Login()),
                   ModalRoute.withName('/'),
                 );
                 break;
@@ -124,23 +122,23 @@ class HomeState extends State {
   }
 }
 
-class TreeWidget extends StatelessWidget {
-  const TreeWidget({
-    super.key,
-  });
+// class TreeWidget extends StatelessWidget {
+//   const TreeWidget({
+//     super.key,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: const <Widget>[
-        Left(),
-        VerticalDivider(
-          width: 2,
-          color: Colors.black12,
-          thickness: 2,
-        ),
-        Right(),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: const <Widget>[
+//         Left(),
+//         VerticalDivider(
+//           width: 2,
+//           color: Colors.black12,
+//           thickness: 2,
+//         ),
+//         Right(),
+//       ],
+//     );
+//   }
+// }

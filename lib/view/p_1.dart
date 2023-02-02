@@ -10,8 +10,7 @@ class P1 extends StatelessWidget {
       key: const PageStorageKey('pagekey'),
       scrollDirection: Axis.vertical,
       itemCount: 100,
-      separatorBuilder: (BuildContext context, int index) =>
-          const Divider(height: 1.0, color: Colors.blue),
+      separatorBuilder: (BuildContext context, int index) => const Divider(height: 1.0, color: Colors.blue),
       itemBuilder: (BuildContext context, int index) {
         return Column(
           children: <Widget>[
@@ -22,8 +21,7 @@ class P1 extends StatelessWidget {
               leading: CircleAvatar(
                 foregroundColor: Theme.of(context).primaryColor,
                 backgroundColor: Colors.grey,
-                backgroundImage:
-                    const AssetImage('assets/images/feature-1.png'),
+                backgroundImage: const AssetImage('assets/images/feature-1.png'),
               ),
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

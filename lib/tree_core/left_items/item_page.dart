@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../core.dart';
-import '../../view_config/data_bean.dart';
+import '../../tree_config/data_bean.dart';
 
 class ItemPage extends StatefulWidget {
   final DataBean bean;
@@ -14,7 +14,7 @@ class ItemPageState extends State<ItemPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: Core().btnControler.stream,
+        stream: Core.instance.itemControlerAction.stream,
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           return ListTile(
             title: _buildItem(widget.bean),
@@ -24,7 +24,7 @@ class ItemPageState extends State<ItemPage> {
 
   Widget _buildItem(DataBean bean) {
     if (bean.children.isEmpty) {
-      return Core().selectedNodeName == bean.name
+      return Core.instance.selectedNodeName == bean.name
           ? ListTile(
               dense: true,
               title: Container(
@@ -37,14 +37,13 @@ class ItemPageState extends State<ItemPage> {
               ),
               enabled: true,
               onTap: () {
-                if ((!Core().openedTabPageList.contains(bean.name)) &&
-                    (Core().pages[bean.name] != null)) {
-                  Core().openedTabPageList.add(bean.name);
+                if ((!Core.instance.openedPageList.contains(bean.name)) && (Core.instance.pages[bean.name] != null)) {
+                  Core.instance.openedPageList.add(bean.name);
                 }
-                Core().selectedNodeName = bean.name;
-                Core().idControlerAction.add(bean.name);
-                Core().idControler.add(bean.name);
-                Core().btnControler.add(bean.name);
+                Core.instance.selectedNodeName = bean.name;
+                Core.instance.notifyBtns(bean.name);
+                Core.instance.notifyPage(bean.name);
+                Core.instance.notifyItem(bean.name);
               },
             )
           : ListTile(
@@ -52,14 +51,13 @@ class ItemPageState extends State<ItemPage> {
                 bean.name,
               ),
               onTap: () {
-                if ((!Core().openedTabPageList.contains(bean.name)) &&
-                    (Core().pages[bean.name] != null)) {
-                  Core().openedTabPageList.add(bean.name);
+                if ((!Core.instance.openedPageList.contains(bean.name)) && (Core.instance.pages[bean.name] != null)) {
+                  Core.instance.openedPageList.add(bean.name);
                 }
-                Core().selectedNodeName = bean.name;
-                Core().idControlerAction.add(bean.name);
-                Core().idControler.add(bean.name);
-                Core().btnControler.add(bean.name);
+                Core.instance.selectedNodeName = bean.name;
+                Core.instance.notifyBtns(bean.name);
+                Core.instance.notifyPage(bean.name);
+                Core.instance.notifyItem(bean.name);
               },
             );
     }

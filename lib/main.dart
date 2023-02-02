@@ -38,11 +38,9 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           primarySwatch: Colors.blue,
           textTheme: AppTheme.textTheme,
-          platform: TargetPlatform.iOS,
-          // 防止组合按钮被覆盖
+          platform: TargetPlatform.windows,
           canvasColor: Colors.transparent,
-          textSelectionTheme:
-              const TextSelectionThemeData(cursorColor: Colors.green),
+          textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.green),
           scaffoldBackgroundColor: const Color.fromARGB(255, 221, 230, 236),
         ),
         debugShowCheckedModeBanner: false,
@@ -72,5 +70,6 @@ class MyApp extends StatelessWidget {
 Map<String, WidgetBuilder> routeList = {
   "notFound": (content) => const NotFound(),
   "login": (content) => const Login(),
+  // "login": (content) => const Home(),
   // "main": (content) => const Home(),
 };

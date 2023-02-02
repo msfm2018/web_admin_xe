@@ -2,7 +2,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import '../view_config/config.dart';
+import '../tree_config/config.dart';
 
 typedef Wb<T> = Widget Function(T);
 
@@ -13,14 +13,13 @@ class Core extends State {
 
     /// 配对数据
     pages = <String, Widget>{};
-    // pagesAction = <String, Widget>{};
 
-    openedTabPageList = <String>[];
+    openedPageList = <String>[];
 
     ///
-    idControler = StreamController.broadcast();
-    idControlerAction = StreamController.broadcast();
-    btnControler = StreamController.broadcast();
+    pageControlerAction = StreamController.broadcast();
+    btnControlerAction = StreamController.broadcast();
+    itemControlerAction = StreamController.broadcast();
     Config.init();
   }
 
@@ -35,22 +34,41 @@ class Core extends State {
     return _instance ?? Core._();
   }
 
+//一共需要通知的三个地方 tree  右侧panel  button列表
+
+// 右侧页面发生变化
+  void notifyPage(String n) {
+    pageControlerAction.add(n);
+  }
+
+// 左侧树发生变化
+  void notifyItem(String n) {
+    itemControlerAction.add(n);
+  }
+
+//标题栏按钮发生变化
+  void notifyBtns(String n) {
+    btnControlerAction.add(n);
+  }
+
   bool isAllExpanded = false;
   var selectedNodeName = '';
   var selectedColor = Colors.blue[200];
-  late StreamController<String> idControler;
 
-  late StreamController<String> idControlerAction;
-  late StreamController<String> btnControler;
+  //3个地方需要update通知
+  late StreamController<String> pageControlerAction;
 
-  late List<String> openedTabPageList;
+  late StreamController<String> btnControlerAction;
+  late StreamController<String> itemControlerAction;
+
+  late List<String> openedPageList;
 
   var rightPanelColor = Colors.white;
   var toolbarColor = const Color(0xFFFEFEFE);
   var toolbarHeight = 40.0;
 
   ///----------------------------------------------------
-  ///页面临时pageView
+  ///页面配置
   late Map<String, Widget> pages;
 
   ///内存节点快捷按钮
@@ -64,7 +82,9 @@ class Core extends State {
 
   @override
   void dispose() {
-    idControler.close();
+    pageControlerAction.close();
+    btnControlerAction.close();
+    itemControlerAction.close();
     super.dispose();
   }
 }
