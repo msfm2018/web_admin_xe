@@ -4,7 +4,9 @@
 
 
 cd web_admin_xe
+
 flutter create . 
+
 flutter pub get
 
 
