@@ -27,7 +27,11 @@ class TreeWidget extends StatelessWidget {
           );
         } else {
           // 手机屏幕，只显示一个页面
-          return const Right();
+          return const Row(
+            children: [
+              Right(),
+            ],
+          );
         }
       },
     );
