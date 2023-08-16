@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'login.dart';
 import 'tree_core/tree.dart';
+import 'tree_core/left_items/left.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -18,22 +19,32 @@ class HomeState extends State {
     super.initState();
   }
 
-  get _drawer => Drawer(
-        child: Center(
-            child: Column(
-          children: const [
-            Text('data'),
-            DrawerHeader(
-                child: Text(
-              'header',
-              style: TextStyle(color: Colors.white),
-            )),
-            Text(
-              'This is Drawer',
-              style: TextStyle(color: Colors.white),
-            )
-          ],
-        )),
+  get _drawer => LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth > 600) {
+            // 平板屏幕，显示两个页面
+            return const Drawer(
+              child: Center(
+                  child: Column(
+                children: [
+                  Text('data'),
+                  DrawerHeader(
+                      child: Text(
+                    'header',
+                    style: TextStyle(color: Colors.white),
+                  )),
+                  Text(
+                    'This is Drawer',
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              )),
+            );
+          } else {
+            // 手机屏幕，只显示一个页面
+            return const Drawer(child: Left());
+          }
+        },
       );
   Drawer _endDrawer() {
     return Drawer(
@@ -80,7 +91,7 @@ class HomeState extends State {
               scaffoldStateKey.currentState!.openDrawer();
             },
           )),
-      title: Row(children: const [
+      title: const Row(children: [
         Text('后台管理框架', style: TextStyle(color: Colors.white)),
       ]),
       actions: <Widget>[
@@ -121,24 +132,3 @@ class HomeState extends State {
     );
   }
 }
-
-// class TreeWidget extends StatelessWidget {
-//   const TreeWidget({
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       children: const <Widget>[
-//         Left(),
-//         VerticalDivider(
-//           width: 2,
-//           color: Colors.black12,
-//           thickness: 2,
-//         ),
-//         Right(),
-//       ],
-//     );
-//   }
-// }
