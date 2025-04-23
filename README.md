@@ -9,7 +9,12 @@ flutter create .
 
 flutter pub get
 
+flutter pub upgrade 
 
+flutter pub get
+
+flutter run -d windows 
+flutter run -d chrome 
 
 
 第一个版本的升级版本 建议使用这个版本 √
