@@ -27,53 +27,9 @@ class P2 extends StatelessWidget {
   }
 
   Widget renderCover() {
-    return Column(
+    return const Column(
       children: <Widget>[
-        ClipRect(
-            //裁剪出来的是矩形
-            child: SizedBox(
-                height: 150,
-                width: 150,
-                child: Image.network(
-                  'https://scpic2.chinaz.net/Files/pic/pic9/202207/apic41968_s.jpg',
-                  fit: BoxFit.cover,
-                ))),
-
-        // // AssetImage(assetName)//不是小部件
-        // //  NetworkImage 不是小部件   CircleAvatar  FadeInImage :NetworkImage
-        // //  Image.network 小部件
-        // // Image.asset  //小部件
-        ClipRRect(
-            //裁剪出来的是矩形
-            borderRadius: BorderRadius.circular(20),
-            child: SizedBox(
-                height: 150,
-                width: 150,
-                child: Image.network(
-                  'https://scpic2.chinaz.net/Files/pic/pic9/202207/apic41968_s.jpg',
-                  fit: BoxFit.cover,
-                ))),
-        // ClipRRect圆角矩形
-        ClipRRect(
-            //裁剪出来的是矩形
-            borderRadius: BorderRadius.circular(20),
-            child: const FadeInImage(
-              width: 160,
-              height: 160,
-              fit: BoxFit.contain,
-              image: NetworkImage('https://img0.baidu.com/it/u=3828415487,808710726&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'),
-              placeholder: AssetImage('assets/images/bg.png'),
-            )),
-
-        ClipOval(
-          clipper: MyClipper(), //设置大小 圆形或者椭圆形。
-          //图片占位
-          child: const FadeInImage(
-            fit: BoxFit.fitHeight,
-            image: NetworkImage('https://img0.baidu.com/it/u=3828415487,808710726&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'),
-            placeholder: AssetImage('assets/images/bg.png'),
-          ),
-        ),
+        Text('页面B', style: TextStyle(color: Colors.grey, fontSize: 26.0)),
       ],
     );
   }

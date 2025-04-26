@@ -12,40 +12,9 @@ class P1 extends StatelessWidget {
       itemCount: 100,
       separatorBuilder: (BuildContext context, int index) => const Divider(height: 1.0, color: Colors.blue),
       itemBuilder: (BuildContext context, int index) {
-        return Column(
+        return const Column(
           children: <Widget>[
-            ListTile(
-              leading: CircleAvatar(
-                foregroundColor: Theme.of(context).primaryColor,
-                backgroundColor: Colors.grey,
-                backgroundImage: const AssetImage('assets/images/feature-1.png'),
-              ),
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "Building a WhatsApp Clone  $index",
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const Text(
-                    '12:34',
-                    style: TextStyle(color: Colors.grey, fontSize: 14.0),
-                  ),
-                ],
-              ),
-              subtitle: Container(
-                padding: const EdgeInsets.only(top: 5.0),
-                child: const Text(
-                  '消息',
-                  style: TextStyle(color: Colors.grey, fontSize: 15.0),
-                ),
-              ),
-              isThreeLine: false,
-              dense: true,
-              contentPadding: const EdgeInsets.all(10.0),
-              enabled: true,
-              selected: true,
-            ),
+            Text('页面A', style: TextStyle(color: Colors.grey, fontSize: 26.0)),
           ],
         );
       },
