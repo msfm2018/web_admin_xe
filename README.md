@@ -1,39 +1,48 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+## 数据定义
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+ import 'package:simple_tree/simple_tree.dart';
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+```数据定义
+final List<DataBean> data = <DataBean>[
+  DataBean( '餐饮', style: const TextStyle( fontSize: 34.0, fontWeight: FontWeight.bold, ),),
+  DataBean('西餐', children: [...dataDetail]),
+ 
+];
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+final List<DataBean> dataDetail = [
+  DataBean('意大利菜', style: const TextStyle(fontFamily: 'NotoSansSC', fontSize: 20.0, color: Colors.blue)),
+  DataBean('法式料理'),
+  DataBean('美式快餐'),
+  DataBean('西班牙菜'),
+];
 
-## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+//定义 一对一关系
+List<PageInfo> myAppPages = [
+  PageInfo(name: '餐饮', widget: const P1()),
+  PageInfo(name: '意大利菜', widget: const P2()),
+  PageInfo(name: '法式料理', widget: Page3()),
+  PageInfo(name: '美式快餐', widget: const TestIndexStack()),
+];
 ```
 
-## Additional information
+## 使用方法
+```
+home.dart
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+void initState() {
+    super.initState();
+    // Config.style = const TextStyle(fontSize: 20.0, color: Colors.blue);
+    Config.init(myAppPages);
+  }
+
+
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: scaffoldStateKey,
+      appBar: getAppBar(),
+      body: TreeWidget(data: data),
+    );
+  }
+  ```
