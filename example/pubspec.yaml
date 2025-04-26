@@ -1,0 +1,51 @@
+name: web_admin
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+    sdk: '>=3.0.6 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  simple_tree:
+    path: ../
+  cupertino_icons: ^1.0.8
+
+  # 屏幕适配
+  shared_preferences: ^2.2.3
+  # 满足密码需求
+  flutter_pw_validator: ^1.6.0
+  syncfusion_flutter_charts: ^25.1.41+1
+  # 二维码
+  syncfusion_flutter_barcodes: ^25.1.41
+
+#毛玻璃
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.2
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/images/
+
+  fonts:
+    - family: Avenir
+      fonts:
+        - asset: assets/fonts/Avenir-Book.ttf
+          weight: 400 # normal
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Montserrat-SemiBold.ttf
+          weight: 600
