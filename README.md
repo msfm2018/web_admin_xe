@@ -4,6 +4,7 @@
 
 ```数据定义
 final List<DataBean> data = <DataBean>[
+  //可定义可不定义样式
   DataBean( '餐饮', style: const TextStyle( fontSize: 34.0, fontWeight: FontWeight.bold, ),),
   DataBean('西餐', children: [...dataDetail]),
  
@@ -32,7 +33,8 @@ home.dart
 
 void initState() {
     super.initState();
-    // Config.style = const TextStyle(fontSize: 20.0, color: Colors.blue);
+    //可定义可不定义样式
+    // Config.style = const TextStyle(fontSize: 20.0, color: Colors.blue); 
     Config.init(myAppPages);
   }
 
