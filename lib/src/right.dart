@@ -30,7 +30,6 @@ class RightState extends State<Right> with TickerProviderStateMixin {
     return StreamBuilder(
       stream: Core.instance.pageControllerAction.stream,
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        print('=====================================');
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return container('显示数据信息');

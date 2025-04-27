@@ -68,24 +68,24 @@ class Core {
   }
 
   // 新增：用于尝试清理 widget 的方法
-  void _disposePageWidget(Widget? widget) {
-    if (widget is StatefulWidget) {
-      final state = widget.createState();
-      if (state is State) {
-        state.dispose();
-      }
-    }
-    // 对于 StatelessWidget，通常不需要显式 dispose
-  }
+  // void _disposePageWidget(Widget? widget) {
+  //   if (widget is StatefulWidget) {
+  //     final state = widget.createState();
+  //     if (state is State) {
+  //       state.dispose();
+  //     }
+  //   }
+  //   // 对于 StatelessWidget，通常不需要显式 dispose
+  // }
 
   void dispose() {
     pageControllerAction.close();
     btnControllerAction.close();
     itemControllerAction.close();
     // 清理所有 PageInfo 中的 widget (在 Core 销毁时)
-    for (var pageInfo in pageMap.values) {
-      _disposePageWidget(pageInfo.widget);
-    }
+    // for (var pageInfo in pageMap.values) {
+    //   // _disposePageWidget(pageInfo.widget);
+    // }
     _instance = null; // 如果 Core 也可以被销毁
   }
 }
