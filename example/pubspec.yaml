@@ -16,15 +16,6 @@ dependencies:
     path: ../
   cupertino_icons: ^1.0.8
 
-  # 屏幕适配
-  shared_preferences: ^2.2.3
-  # 满足密码需求
-  flutter_pw_validator: ^1.6.0
-  syncfusion_flutter_charts: ^25.1.41+1
-  # 二维码
-  syncfusion_flutter_barcodes: ^25.1.41
-
-#毛玻璃
 
 dev_dependencies:
   flutter_test:
