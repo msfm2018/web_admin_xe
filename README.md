@@ -1,9 +1,7 @@
 #### 应用截图
-
 <p align="center">
   <img src="https://github.com/msfm2018/simple_tree/blob/v1.9/index1.png?raw=true">
 </p>
-
 
 ## 数据定义
 
@@ -11,13 +9,14 @@
 
 ```数据定义
 final List<DataBean> data = <DataBean>[
+  //可定义可不定义样式
   DataBean( '餐饮', style: const TextStyle( fontSize: 34.0, fontWeight: FontWeight.bold, ),),
   DataBean('西餐', children: [...dataDetail]),
  
 ];
 
 final List<DataBean> dataDetail = [
-  DataBean('意大利菜', style: const TextStyle( fontSize: 20.0, color: Colors.blue)),
+  DataBean('意大利菜', style: const TextStyle(fontFamily: 'NotoSansSC', fontSize: 20.0, color: Colors.blue)),
   DataBean('法式料理'),
   DataBean('美式快餐'),
   DataBean('西班牙菜'),
