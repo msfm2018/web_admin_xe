@@ -1,17 +1,7 @@
-import 'dart:async';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class P3Data {
-  var myTitle = 'mytitile';
-  int i = 0;
-}
-
 class Page3 extends StatefulWidget {
-  Page3({super.key});
-
-  // String name = '';
+  const Page3({super.key});
 
   @override
   P3State createState() => P3State();

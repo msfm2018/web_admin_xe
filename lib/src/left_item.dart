@@ -48,7 +48,7 @@ class ItemPageState extends State<ItemPage> {
       Core.instance.notifyPage(bean.name);
       Core.instance.notifyItem(bean.name);
     } catch (e) {
-      debugPrint('error:-->Core.instance.pageMap.entries.firstWhere(...)');
+      // debugPrint('error:-->Core.instance.pageMap.entries.firstWhere(...)');
     }
   }
 
@@ -56,37 +56,37 @@ class ItemPageState extends State<ItemPage> {
     if (bean.children.isEmpty) {
       return Core.instance.selectedNodeName == bean.name
           ? TextButton(
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all<Color>(Colors.blue[200]!), // 设置背景颜色
-              foregroundColor: WidgetStateProperty.resolveWith<Color?>(foregroundColor),
-              padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero), // 设置内边距为零
-              minimumSize: WidgetStateProperty.all<Size>(const Size(44, 40)),
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              alignment: Alignment.center,
-              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0), // 设置圆角半径
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all<Color>(Colors.blue[200]!), // 设置背景颜色
+                foregroundColor: WidgetStateProperty.resolveWith<Color?>(foregroundColor),
+                padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero), // 设置内边距为零
+                minimumSize: WidgetStateProperty.all<Size>(const Size(44, 40)),
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                alignment: Alignment.center,
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0), // 设置圆角半径
+                  ),
                 ),
+                side: WidgetStateProperty.all<BorderSide>(
+                  const BorderSide(width: 1.0, color: Colors.white), // 设置边框宽度和颜色
+                ),
+                iconColor: WidgetStateProperty.all<Color?>(Colors.white),
+                iconSize: WidgetStateProperty.all(15),
               ),
-              side: WidgetStateProperty.all<BorderSide>(
-                const BorderSide(width: 1.0, color: Colors.white), // 设置边框宽度和颜色
-              ),
-              iconColor: WidgetStateProperty.all<Color?>(Colors.white),
-              iconSize: WidgetStateProperty.all(15),
-            ),
-            child: Text(bean.name, style: bean.style ?? Config.style),
-            onPressed: () => _handlePressed(bean),
-          )
+              child: Text(bean.name, style: bean.style ?? Config.style),
+              onPressed: () => _handlePressed(bean),
+            )
           : TextButton(
-            style: ButtonStyle(
-              overlayColor: WidgetStateProperty.resolveWith<Color?>(overlayColor),
-              foregroundColor: WidgetStateProperty.resolveWith<Color?>(foregroundColor),
-              shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
-              backgroundColor: WidgetStateProperty.all(Colors.transparent),
-            ),
-            child: Text(bean.name, style: bean.style ?? Config.style),
-            onPressed: () => _handlePressed(bean),
-          );
+              style: ButtonStyle(
+                overlayColor: WidgetStateProperty.resolveWith<Color?>(overlayColor),
+                foregroundColor: WidgetStateProperty.resolveWith<Color?>(foregroundColor),
+                shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
+                backgroundColor: WidgetStateProperty.all(Colors.transparent),
+              ),
+              child: Text(bean.name, style: bean.style ?? Config.style),
+              onPressed: () => _handlePressed(bean),
+            );
     }
 
     return ExpansionTile(

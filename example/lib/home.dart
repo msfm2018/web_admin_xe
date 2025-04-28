@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_tree/simple_tree.dart';
 
-import 'tree_config/menu_data.dart'; //  导入 data_bean.dart
+import 'tree_config/menu_data.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
