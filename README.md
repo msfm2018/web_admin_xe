@@ -4,7 +4,7 @@
 </p>
 
 
-![image](https://github.com/msfm2018/simple_tree/blob/0.0.5/index.png)
+
 
 
 ## 数据定义
