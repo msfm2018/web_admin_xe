@@ -15,7 +15,7 @@ class ItemPageState extends State<ItemPage> {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: Core.instance.itemControllerAction.stream,
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
         return ListTile(title: _buildItem(widget.bean));
       },
     );
@@ -40,13 +40,13 @@ class ItemPageState extends State<ItemPage> {
 
   void _handlePressed(TreeData bean) {
     try {
-      var entry2 = Core.instance.pageMap.entries.firstWhere((entry) => entry.value.name == bean.name);
+      var entry2 = Core.instance.pageMap.entries.firstWhere((entry) => entry.value.index == bean.index);
       entry2.value.isActive = true;
 
-      Core.instance.selectedNodeName = bean.name;
-      Core.instance.notifyBtns(bean.name);
-      Core.instance.notifyPage(bean.name);
-      Core.instance.notifyItem(bean.name);
+      Core.instance.selectedNodeIndex = bean.index;
+      Core.instance.notifyBtns(bean.index);
+      Core.instance.notifyPage(bean.index);
+      Core.instance.notifyItem(bean.index);
     } catch (e) {
       // debugPrint('error:-->Core.instance.pageMap.entries.firstWhere(...)');
     }
@@ -54,7 +54,7 @@ class ItemPageState extends State<ItemPage> {
 
   Widget _buildItem(TreeData bean) {
     if (bean.children.isEmpty) {
-      return Core.instance.selectedNodeName == bean.name
+      return Core.instance.selectedNodeIndex == bean.index
           ? TextButton(
               style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.all<Color>(Colors.blue[200]!), // 设置背景颜色

@@ -5,11 +5,13 @@ class DataBean implements TreeData {
   @override
   final String name;
   @override
+  final int index;
+  @override
   final List<DataBean> children;
   @override
-  final TextStyle? style; // 新增可选样式属性
+  final TextStyle? style;
 
-  DataBean(this.name, {this.children = const <DataBean>[], this.style});
+  DataBean(this.index, this.name, {this.children = const <DataBean>[], this.style});
 
   @override
   String toString() {

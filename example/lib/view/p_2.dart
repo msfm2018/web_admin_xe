@@ -5,6 +5,6 @@ class P2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('页面B', style: TextStyle(color: Colors.grey, fontSize: 26.0));
+    return const Text('页面B', style: TextStyle(color: Colors.grey, fontSize: 26.0));
   }
 }

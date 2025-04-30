@@ -6,3 +6,4 @@ export 'src/left.dart';
 export 'src/right.dart';
 export 'src/tree.dart';
 export 'src/page_info.dart';
+export 'src/menu_node.dart';

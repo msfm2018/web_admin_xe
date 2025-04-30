@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 abstract class TreeData {
   String get name;
+  int get index;
   TextStyle? get style;
   List<TreeData> get children;
 }

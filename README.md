@@ -1,6 +1,6 @@
 #### 应用截图
 <p align="center">
-  <img src="https://github.com/msfm2018/simple_tree/blob/v1.9/index1.png?raw=true">
+  <img src="https://github.com/msfm2018/simple_tree/blob/0.0.5/index.png?raw=true">
 </p>
 
 ## 数据定义

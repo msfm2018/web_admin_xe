@@ -26,10 +26,10 @@ class RightState extends State<Right> with TickerProviderStateMixin {
 
   Widget container(text) => Container(alignment: Alignment.center, child: Text(text, style: const TextStyle(fontSize: 18)));
 
-  StreamBuilder<String> visiblePage() {
+  StreamBuilder<int> visiblePage() {
     return StreamBuilder(
       stream: Core.instance.pageControllerAction.stream,
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return container('显示数据信息');
@@ -39,10 +39,12 @@ class RightState extends State<Right> with TickerProviderStateMixin {
               return container('Error');
             } else if (snapshot.hasData) {
               try {
-                var entry2 = Core.instance.pageMap.entries.firstWhere((entry) => entry.value.name == snapshot.data.toString());
+                var entry2 = Core.instance.pageMap.entries.firstWhere((entry) => entry.value.index == snapshot.data);
                 return entry2.value.widget;
               } catch (e) {
-                return container(snapshot.data.toString());
+                // return container(snapshot.data.toString());
+
+                return container("Empty data");
               }
             } else {
               return container('Empty data');
@@ -79,10 +81,10 @@ class RightState extends State<Right> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  StreamBuilder<String> toolbar() {
+  StreamBuilder<int> toolbar() {
     return StreamBuilder(
       stream: Core.instance.btnControllerAction.stream,
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Container();
         } else if (snapshot.connectionState == ConnectionState.active || snapshot.connectionState == ConnectionState.done) {
@@ -96,40 +98,39 @@ class RightState extends State<Right> with TickerProviderStateMixin {
                 primary: false,
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children:
-                      Core.instance.pageMap.entries.where((entry) => entry.value.isActive).map((entry) {
-                        return Container(
-                          height: 24.0 * 1.0,
-                          margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                          decoration: BoxDecoration(
-                            color: entry.value.name == Core.instance.selectedNodeName ? Core.instance.selectedColor : Colors.deepOrange[100],
-                            borderRadius: const BorderRadius.all(Radius.circular(4)),
+                  children: Core.instance.pageMap.entries.where((entry) => entry.value.isActive).map((entry) {
+                    return Container(
+                      height: 24.0 * 1.0,
+                      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                      decoration: BoxDecoration(
+                        color: entry.value.index == Core.instance.selectedNodeIndex ? Core.instance.selectedColor : Colors.deepOrange[100],
+                        borderRadius: const BorderRadius.all(Radius.circular(4)),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            style: ButtonStyle(
+                              overlayColor: WidgetStateProperty.resolveWith<Color?>(overlayColor),
+                              foregroundColor: WidgetStateProperty.resolveWith<Color?>(foregroundColor),
+                              shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
+                              backgroundColor: WidgetStateProperty.all(Colors.transparent),
+                            ),
+                            child: text(entry.value.title),
+                            onPressed: () => _handleSelection(entry),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextButton(
-                                style: ButtonStyle(
-                                  overlayColor: WidgetStateProperty.resolveWith<Color?>(overlayColor),
-                                  foregroundColor: WidgetStateProperty.resolveWith<Color?>(foregroundColor),
-                                  shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
-                                  backgroundColor: WidgetStateProperty.all(Colors.transparent),
-                                ),
-                                child: text(entry.value.name),
-                                onPressed: () => _handleSelection(entry),
-                              ),
-                              IconButton(
-                                // style: buttonStyle,
-                                iconSize: 12,
-                                hoverColor: Colors.lightGreen,
-                                color: Colors.grey[700],
-                                onPressed: () => _handleIconButton(entry),
-                                icon: const Icon(Icons.close_outlined),
-                              ),
-                            ],
+                          IconButton(
+                            // style: buttonStyle,
+                            iconSize: 12,
+                            hoverColor: Colors.lightGreen,
+                            color: Colors.grey[700],
+                            onPressed: () => _handleIconButton(entry),
+                            icon: const Icon(Icons.close_outlined),
                           ),
-                        );
-                      }).toList(),
+                        ],
+                      ),
+                    );
+                  }).toList(),
                 ),
               ),
             );
@@ -143,26 +144,26 @@ class RightState extends State<Right> with TickerProviderStateMixin {
     );
   }
 
-  void _handleSelection(MapEntry<String, PageInfo> entry) {
-    String k = entry.value.name;
-    Core.instance.selectedNodeName = k;
+  void _handleSelection(MapEntry<int, PageInfo> entry) {
+    int k = entry.value.index;
+    Core.instance.selectedNodeIndex = k;
     Core.instance.notifyBtns(k);
     Core.instance.notifyPage(k);
     Core.instance.notifyItem(k);
   }
 
-  void _handleIconButton(MapEntry<String, PageInfo> entry) {
+  void _handleIconButton(MapEntry<int, PageInfo> entry) {
     entry.value.isActive = false;
     try {
       final activeEntry = Core.instance.pageMap.entries.firstWhere((entry) => entry.value.isActive);
-      final k = activeEntry.value.name;
-      Core.instance.selectedNodeName = k;
+      int k = activeEntry.value.index;
+      Core.instance.selectedNodeIndex = k;
       Core.instance.notifyItem(k);
       Core.instance.notifyPage(k);
       Core.instance.notifyBtns(k);
     } catch (e) {
-      Core.instance.notifyPage('显示数据信息');
-      Core.instance.notifyBtns('清空');
+      Core.instance.notifyPage(-1);
+      Core.instance.notifyBtns(-1);
     }
   }
 }

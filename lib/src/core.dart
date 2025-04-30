@@ -22,7 +22,7 @@ class Config {
 
   static init(List<PageInfo> initialPages) {
     for (var element in initialPages) {
-      Core.instance.pageMap.putIfAbsent(element.name, () => element);
+      Core.instance.pageMap.putIfAbsent(element.index, () => element);
     }
   }
 
@@ -34,10 +34,10 @@ class Config {
 class Core {
   Core._() {
     _instance = this;
-    pageMap = <String, PageInfo>{};
-    pageControllerAction = StreamController<String>.broadcast();
-    btnControllerAction = StreamController<String>.broadcast();
-    itemControllerAction = StreamController<String>.broadcast();
+    pageMap = <int, PageInfo>{};
+    pageControllerAction = StreamController<int>.broadcast();
+    btnControllerAction = StreamController<int>.broadcast();
+    itemControllerAction = StreamController<int>.broadcast();
   }
 
   static Core? _instance;
@@ -45,25 +45,25 @@ class Core {
   static Core get instance => _getInstance();
   static Core _getInstance() => _instance ?? Core._();
 
-  late StreamController<String> pageControllerAction;
-  late StreamController<String> btnControllerAction;
-  late StreamController<String> itemControllerAction;
+  late StreamController<int> pageControllerAction;
+  late StreamController<int> btnControllerAction;
+  late StreamController<int> itemControllerAction;
 
   bool isAllExpanded = false;
-  String selectedNodeName = '';
+  int selectedNodeIndex = -1;
   Color? selectedColor = Colors.blue[200];
 
-  Map<String, PageInfo> pageMap = <String, PageInfo>{};
+  Map<int, PageInfo> pageMap = <int, PageInfo>{};
 
-  void notifyPage(String n) {
+  void notifyPage(int n) {
     pageControllerAction.add(n);
   }
 
-  void notifyItem(String n) {
+  void notifyItem(int n) {
     itemControllerAction.add(n);
   }
 
-  void notifyBtns(String n) {
+  void notifyBtns(int n) {
     btnControllerAction.add(n);
   }
 
