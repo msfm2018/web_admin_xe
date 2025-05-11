@@ -12,18 +12,18 @@
  import 'package:simple_tree/simple_tree.dart';
 
 ```数据定义
-final List<DataBean> data = <DataBean>[
+
+final List<TreeNode> data = <TreeNode>[
   //可定义可不定义样式
-  DataBean( '餐饮', style: const TextStyle( fontSize: 34.0, fontWeight: FontWeight.bold, ),),
-  DataBean('西餐', children: [...dataDetail]),
- 
+  TreeNode( '餐饮', style: const TextStyle( fontSize: 34.0, fontWeight: FontWeight.bold, ),),
+  TreeNode('西餐', children: [...dataDetail]), 
 ];
 
-final List<DataBean> dataDetail = [
-  DataBean('意大利菜', style: const TextStyle(fontFamily: 'NotoSansSC', fontSize: 20.0, color: Colors.blue)),
-  DataBean('法式料理'),
-  DataBean('美式快餐'),
-  DataBean('西班牙菜'),
+final List<TreeNode> dataDetail = [
+  TreeNode('意大利菜', style: const TextStyle(fontFamily: 'NotoSansSC', fontSize: 20.0, color: Colors.blue)),
+  TreeNode('法式料理'),
+  TreeNode('美式快餐'),
+  TreeNode('西班牙菜'),
 ];
 
 

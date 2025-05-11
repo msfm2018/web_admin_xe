@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'left_item.dart';
-import 'data.dart';
+import 'tree_base.dart';
 
 class MultiNamePage extends StatefulWidget {
-  final List<TreeData>? data; //  使用 TreeData
+  final List<TreeBase>? data; //  使用 TreeBase
   const MultiNamePage({super.key, this.data});
 
   @override
@@ -13,7 +13,7 @@ class MultiNamePage extends StatefulWidget {
 class MultiItemPageState extends State<MultiNamePage> {
   @override
   Widget build(BuildContext context) {
-    final List<TreeData> displayData = widget.data ?? [];
+    final List<TreeBase> displayData = widget.data ?? [];
     return ListView.builder(
       itemCount: displayData.length,
       itemBuilder: (BuildContext context, int index) {
@@ -24,7 +24,7 @@ class MultiItemPageState extends State<MultiNamePage> {
 }
 
 class Left extends StatefulWidget {
-  final List<TreeData>? data;
+  final List<TreeBase>? data;
   const Left({super.key, this.data});
 
   @override

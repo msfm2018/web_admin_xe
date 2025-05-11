@@ -5,8 +5,8 @@ import '../view/p_2.dart';
 import '../view/p_indexstack.dart';
 import '../view/page3.dart';
 
-final List<DataBean> data = <DataBean>[
-  DataBean(
+final List<TreeNode> data = <TreeNode>[
+  TreeNode(
     1,
     '餐饮',
     style: const TextStyle(
@@ -14,38 +14,38 @@ final List<DataBean> data = <DataBean>[
       fontWeight: FontWeight.bold,
     ),
   ),
-  DataBean(2, '西餐', children: [...westernCuisine]),
-  DataBean(3, '甜点', children: [
-    DataBean(4, '蛋糕', children: [...cakes]),
+  TreeNode(2, '西餐', children: [...westernCuisine]),
+  TreeNode(3, '甜点', children: [
+    TreeNode(4, '蛋糕', children: [...cakes]),
     ...otherDesserts,
   ]),
-  DataBean(5, '饮品', children: <DataBean>[
-    DataBean(6, '茶饮'),
-    DataBean(7, '果汁'),
+  TreeNode(5, '饮品', children: <TreeNode>[
+    TreeNode(6, '茶饮'),
+    TreeNode(7, '果汁'),
   ]),
 ];
 
-final List<DataBean> westernCuisine = [
-  DataBean(8, '意大利菜', style: const TextStyle(fontFamily: 'NotoSansSC', fontSize: 20.0, color: Colors.blue)),
-  DataBean(9, '法式料理'),
-  DataBean(10, '美式快餐'),
-  DataBean(11, '西班牙菜'),
+final List<TreeNode> westernCuisine = [
+  TreeNode(8, '意大利菜', style: const TextStyle(fontFamily: 'NotoSansSC', fontSize: 20.0, color: Colors.blue)),
+  TreeNode(9, '法式料理'),
+  TreeNode(10, '美式快餐'),
+  TreeNode(11, '西班牙菜'),
 ];
 
-final List<DataBean> cakes = [
-  DataBean(12, '巧克力蛋糕'),
-  DataBean(13, '芝士蛋糕'),
-  DataBean(14, '草莓蛋糕'),
-  DataBean(15, '抹茶蛋糕'),
+final List<TreeNode> cakes = [
+  TreeNode(12, '巧克力蛋糕'),
+  TreeNode(13, '芝士蛋糕'),
+  TreeNode(14, '草莓蛋糕'),
+  TreeNode(15, '抹茶蛋糕'),
 ];
 
-final List<DataBean> otherDesserts = [
-  DataBean(16, '冰淇淋'),
-  DataBean(17, '布丁'),
-  DataBean(18, '马卡龙'),
-  DataBean(19, '泡芙'),
-  DataBean(20, '提拉米苏'),
-  DataBean(21, '果冻'),
+final List<TreeNode> otherDesserts = [
+  TreeNode(16, '冰淇淋'),
+  TreeNode(17, '布丁'),
+  TreeNode(18, '马卡龙'),
+  TreeNode(19, '泡芙'),
+  TreeNode(20, '提拉米苏'),
+  TreeNode(21, '果冻'),
 ];
 
 //定义 一对一关系
