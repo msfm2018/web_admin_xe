@@ -7,45 +7,45 @@ import '../view/page3.dart';
 
 final List<TreeNode> data = <TreeNode>[
   TreeNode(
-    1,
-    '餐饮',
+    index: 1,
+    name: '餐饮',
     style: const TextStyle(
       fontSize: 34.0,
       fontWeight: FontWeight.bold,
     ),
   ),
-  TreeNode(2, '西餐', children: [...westernCuisine]),
-  TreeNode(3, '甜点', children: [
-    TreeNode(4, '蛋糕', children: [...cakes]),
+  TreeNode(index: 2, name: '西餐', children: [...westernCuisine]),
+  TreeNode(index: 3, name: '甜点', children: [
+    TreeNode(index: 4, name: '蛋糕', children: [...cakes]),
     ...otherDesserts,
   ]),
-  TreeNode(5, '饮品', children: <TreeNode>[
-    TreeNode(6, '茶饮'),
-    TreeNode(7, '果汁'),
+  TreeNode(index: 5, name: '饮品', children: <TreeNode>[
+    TreeNode(index: 6, name: '茶饮'),
+    TreeNode(index: 7, name: '果汁'),
   ]),
 ];
 
 final List<TreeNode> westernCuisine = [
-  TreeNode(8, '意大利菜', style: const TextStyle(fontFamily: 'NotoSansSC', fontSize: 20.0, color: Colors.blue)),
-  TreeNode(9, '法式料理'),
-  TreeNode(10, '美式快餐'),
-  TreeNode(11, '西班牙菜'),
+  TreeNode(index: 8, name: '意大利菜', style: const TextStyle(fontFamily: 'NotoSansSC', fontSize: 20.0, color: Colors.blue)),
+  TreeNode(index: 9, name: '法式料理'),
+  TreeNode(index: 10, name: '美式快餐'),
+  TreeNode(index: 11, name: '西班牙菜'),
 ];
 
 final List<TreeNode> cakes = [
-  TreeNode(12, '巧克力蛋糕'),
-  TreeNode(13, '芝士蛋糕'),
-  TreeNode(14, '草莓蛋糕'),
-  TreeNode(15, '抹茶蛋糕'),
+  TreeNode(index: 12, name: '巧克力蛋糕'),
+  TreeNode(index: 13, name: '芝士蛋糕'),
+  TreeNode(index: 14, name: '草莓蛋糕'),
+  TreeNode(index: 15, name: '抹茶蛋糕'),
 ];
 
 final List<TreeNode> otherDesserts = [
-  TreeNode(16, '冰淇淋'),
-  TreeNode(17, '布丁'),
-  TreeNode(18, '马卡龙'),
-  TreeNode(19, '泡芙'),
-  TreeNode(20, '提拉米苏'),
-  TreeNode(21, '果冻'),
+  TreeNode(index: 16, name: '冰淇淋'),
+  TreeNode(index: 17, name: '布丁'),
+  TreeNode(index: 18, name: '马卡龙'),
+  TreeNode(index: 19, name: '泡芙'),
+  TreeNode(index: 20, name: '提拉米苏'),
+  TreeNode(index: 21, name: '果冻'),
 ];
 
 //定义 一对一关系

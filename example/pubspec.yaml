@@ -11,9 +11,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  # simple_tree:
-  #   path: ../
-  simple_tree: ^0.0.7
+  simple_tree:
+    path: ../
+  # simple_tree: ^0.0.8
   cupertino_icons: ^1.0.8
 
 
