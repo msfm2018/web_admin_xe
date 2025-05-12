@@ -11,7 +11,7 @@ class TreeNode implements TreeBase {
   @override
   final TextStyle? style;
 
-  TreeNode(this.index, this.name, {this.children = const <TreeNode>[], this.style});
+  TreeNode({required this.index, required this.name, this.children = const <TreeNode>[], this.style});
 
   @override
   String toString() {
