@@ -1,6 +1,6 @@
 name: simple_tree
 description: "A tree frame project."
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/msfm2018/simple_tree
 repository: https://github.com/msfm2018/simple_tree
 
@@ -11,6 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  rxflare: ^0.0.3
 
 dev_dependencies:
   flutter_test:

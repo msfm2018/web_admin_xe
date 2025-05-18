@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rxflare/rxflare.dart';
 import 'page_info.dart';
-
 import 'core.dart';
 
 class Right extends StatefulWidget {
@@ -21,36 +21,21 @@ class RightState extends State<Right> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: Column(children: [toolbar(), Expanded(child: visiblePage())]));
+    return Expanded(child: Column(children: [toolbar(), Expanded(child: _visiblePage())]));
   }
 
   Widget container(text) => Container(alignment: Alignment.center, child: Text(text, style: const TextStyle(fontSize: 18)));
 
-  StreamBuilder<int> visiblePage() {
-    return StreamBuilder(
-      stream: Core.instance.pageControllerAction.stream,
-      builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return container('显示数据信息');
-          case ConnectionState.active:
-          case ConnectionState.done:
-            if (snapshot.hasError) {
-              return container('Error');
-            } else if (snapshot.hasData) {
-              try {
-                var entry2 = Core.instance.pageMap.entries.firstWhere((entry) => entry.value.index == snapshot.data);
-                return entry2.value.widget;
-              } catch (e) {
-                // return container(snapshot.data.toString());
-
-                return container("Empty data");
-              }
-            } else {
-              return container('Empty data');
-            }
-          default:
-            return container('State: ${snapshot.connectionState}');
+  Widget _visiblePage() {
+    return Rx.custom(
+      deps: [Core.instance.pageAction],
+      builder: () {
+        final snapshotData = Core.instance.pageAction.value;
+        try {
+          final entry2 = Core.instance.pageMap.value.entries.firstWhere((entry) => entry.value.index == snapshotData);
+          return entry2.value.widget;
+        } catch (e) {
+          return container("No page found");
         }
       },
     );
@@ -81,86 +66,111 @@ class RightState extends State<Right> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  StreamBuilder<int> toolbar() {
-    return StreamBuilder(
-      stream: Core.instance.btnControllerAction.stream,
-      builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+  Widget toolbar() {
+    return Rx.custom(
+      deps: [Core.instance.btnAction, Core.instance.pageMap, Core.instance.selectedNodeIndex],
+      builder: () {
+        print("toolbar builder 执行");
+        final activePages = Core.instance.pageMap.value.entries.where((entry) => entry.value.isActive).toList();
+        if (activePages.isEmpty) {
           return Container();
-        } else if (snapshot.connectionState == ConnectionState.active || snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            return const Text('Error');
-          } else if (snapshot.hasData) {
-            return Container(
-              margin: const EdgeInsets.only(top: 6, bottom: 6),
-              child: SingleChildScrollView(
-                controller: _scrollController2,
-                primary: false,
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: Core.instance.pageMap.entries.where((entry) => entry.value.isActive).map((entry) {
-                    return Container(
-                      height: 24.0 * 1.0,
-                      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                      decoration: BoxDecoration(
-                        color: entry.value.index == Core.instance.selectedNodeIndex ? Core.instance.selectedColor : Colors.deepOrange[100],
-                        borderRadius: const BorderRadius.all(Radius.circular(4)),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextButton(
-                            style: ButtonStyle(
-                              overlayColor: WidgetStateProperty.resolveWith<Color?>(overlayColor),
-                              foregroundColor: WidgetStateProperty.resolveWith<Color?>(foregroundColor),
-                              shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
-                              backgroundColor: WidgetStateProperty.all(Colors.transparent),
-                            ),
-                            child: text(entry.value.title),
-                            onPressed: () => _handleSelection(entry),
-                          ),
-                          IconButton(
-                            // style: buttonStyle,
-                            iconSize: 12,
-                            hoverColor: Colors.lightGreen,
-                            color: Colors.grey[700],
-                            onPressed: () => _handleIconButton(entry),
-                            icon: const Icon(Icons.close_outlined),
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
-            );
-          } else {
-            return const Text('Empty data');
-          }
-        } else {
-          return Text('State: ${snapshot.connectionState}');
         }
+        return Container(
+          margin: const EdgeInsets.only(top: 6, bottom: 6),
+          child: SingleChildScrollView(
+            controller: _scrollController2,
+            primary: false,
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: activePages.map((entry) {
+                return Container(
+                  height: 24.0 * 1.0,
+                  margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                  decoration: BoxDecoration(
+                    color: entry.value.index == Core.instance.selectedNodeIndex.value ? Core.instance.selectedColor : Colors.white,
+                    borderRadius: const BorderRadius.all(Radius.circular(4)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 24.0,
+                        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                        decoration: BoxDecoration(
+                          color: entry.value.index == Core.instance.selectedNodeIndex.value ? Core.instance.selectedColor : Colors.white,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: Row(
+                            children: [
+                              // 点击标题部分
+                              InkWell(
+                                borderRadius: BorderRadius.circular(4),
+                                onTap: () => _handleSelection(entry),
+                                child: Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0), child: text(entry.value.title)),
+                              ),
+                              // 分隔间距
+                              const SizedBox(width: 4),
+                              // 点击关闭图标
+                              InkWell(
+                                borderRadius: BorderRadius.circular(20),
+                                onTap: () => _handleIconButton(entry),
+                                child: Padding(padding: const EdgeInsets.all(4.0), child: Icon(Icons.close_outlined, size: 12, color: Colors.grey[700])),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        );
       },
     );
   }
 
   void _handleSelection(MapEntry<int, PageInfo> entry) {
     int k = entry.value.index;
-    Core.instance.selectedNodeIndex = k;
+    Core.instance.selectedNodeIndex.value = k;
     Core.instance.notifyBtns(k);
     Core.instance.notifyPage(k);
     Core.instance.notifyItem(k);
   }
 
   void _handleIconButton(MapEntry<int, PageInfo> entry) {
-    entry.value.isActive = false;
+    print("mygod.........+++.......");
+    print(entry.value.isActive.toString());
+    print(entry.value.toString());
+    // entry.value.isActive = false; // 直接修改，应该通过 Core 更新
     try {
-      final activeEntry = Core.instance.pageMap.entries.firstWhere((entry) => entry.value.isActive);
-      int k = activeEntry.value.index;
-      Core.instance.selectedNodeIndex = k;
-      Core.instance.notifyItem(k);
-      Core.instance.notifyPage(k);
-      Core.instance.notifyBtns(k);
+      // final activeEntry = Core.instance.pageMap.value.entries.firstWhere((entry) => entry.value.isActive);
+      // int k = activeEntry.value.index;
+      // print(k.toString());
+      // Core.instance.selectedNodeIndex.value = k;
+      // Core.instance.notifyItem(k);
+      // Core.instance.notifyPage(k);
+      // Core.instance.notifyBtns(k);
+
+      //  使用 updatePageInfo 来更新 isActive
+      final updatedEntry = entry.value.copyWith(isActive: false);
+      Core.instance.updatePageInfo(entry.key, updatedEntry);
+
+      //  如果关闭的是当前选中的，需要更新选中项
+      if (entry.value.index == Core.instance.selectedNodeIndex.value) {
+        //  找到第一个激活的页面并选中它
+        final activeEntry = Core.instance.pageMap.value.entries.firstWhere(
+          (entry) => entry.value.isActive,
+          orElse: () => MapEntry(-1, PageInfo(index: -1, title: 'None', widget: Container())), // 默认值
+        );
+        Core.instance.selectedNodeIndex.value = activeEntry.value.index;
+        Core.instance.notifyBtns(activeEntry.value.index);
+        Core.instance.notifyPage(activeEntry.value.index);
+        Core.instance.notifyItem(activeEntry.value.index);
+      }
     } catch (e) {
       Core.instance.notifyPage(-1);
       Core.instance.notifyBtns(-1);

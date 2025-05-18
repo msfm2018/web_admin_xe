@@ -17,13 +17,12 @@ class HomeState extends State {
   void initState() {
     super.initState();
     //添加 第一处
-    // Config.style = const TextStyle(fontSize: 20.0, color: Colors.blue);
-    Config.init(myAppPages);
+    // Core.instance.style = const TextStyle(fontSize: 20.0, color: Colors.blue);
+    Core.instance.initPages(myAppPages);
   }
 
   @override
   void dispose() {
-    Config.dispose();
     super.dispose();
   }
 
@@ -32,7 +31,7 @@ class HomeState extends State {
     return Scaffold(
       key: scaffoldStateKey,
       appBar: getAppBar(),
-      body: TreeWidget(data: data),//添加 第二处
+      body: TreeWidget(data: data), //添加 第二处
     );
   }
 
