@@ -1,24 +1,32 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class PageInfo {
-  final String title;
   final int index;
-  final Widget widget;
-  bool isActive;
-
-  PageInfo({required this.index, required this.title, required this.widget, this.isActive = false});
+  final String title;
+  final Widget Function() builder;
+  final bool isActive;
+  final IconData? icon; // 加这行
+  PageInfo({
+    required this.index,
+    required this.title,
+    required this.builder,
+    this.isActive = false,
+    this.icon,
+  });
 
   PageInfo copyWith({
-    String? title,
     int? index,
-    Widget? widget,
+    String? title,
+    Widget Function()? builder,
     bool? isActive,
+      IconData? icon,
   }) {
     return PageInfo(
-      title: title ?? this.title,
       index: index ?? this.index,
-      widget: widget ?? this.widget,
+      title: title ?? this.title,
+      builder: builder ?? this.builder,
       isActive: isActive ?? this.isActive,
+       icon: icon ?? this.icon,
     );
   }
 }

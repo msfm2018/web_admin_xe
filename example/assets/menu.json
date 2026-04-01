@@ -1,0 +1,117 @@
+[
+  {
+    "index": 1,
+    "name": "首页",
+    "page": "",
+    "icon": "home"
+  },
+  {
+    "index": 2,
+    "name": "系统配置",
+    "children": [
+      { "index": 21, "name": "基础设置", "page": "DashboardChart","icon":"settings" }
+    ]
+  },
+  {
+    "index": 3,
+    "name": "权限管理",
+    "children": [
+      { "index": 31, "name": "用户管理", "page": "AdminDashboardPage" ,"icon":"home"},
+      { "index": 32, "name": "角色管理", "page": "dashboard" }
+    ]
+  },
+  {
+    "index": 4,
+    "name": "系统监控",
+    "children": [
+      { "index": 41, "name": "操作日志", "page": "dashboard" }
+    ]
+  },
+  {
+    "index": 5,
+    "name": "系统工具",
+    "children": [
+      { "index": 51, "name": "代码生成", "page": "DashboardChart" }
+    ]
+  },
+  {
+    "index": 6,
+    "name": "数字化大屏",
+    "page": "AdminDashboardPage"
+  },
+  {
+    "index": 7,
+    "name": "外链测试",
+    "children": []
+  },
+  {
+    "index": 8,
+    "name": "邮件配置",
+    "children": []
+  },
+  {
+    "index": 9,
+    "name": "短信配置",
+    "children": []
+  },
+  {
+    "index": 10,
+    "name": "通知公告",
+    "children": []
+  },
+  {
+    "index": 11,
+    "name": "流程管理 (插件)",
+    "children": []
+  },
+  {
+    "index": 12,
+    "name": "IP过滤 (插件)",
+    "children": []
+  },
+  {
+    "index": 13,
+    "name": "公众号管理 (插件)",
+    "children": []
+  },
+  {
+    "index": 14,
+    "name": "考试系统 (插件)",
+    "children": []
+  },
+  {
+    "index": 15,
+    "name": "单点登录 (插件)",
+    "children": []
+  },
+  {
+    "index": 16,
+    "name": "点餐系统 (插件)",
+    "children": []
+  },
+  {
+    "index": 17,
+    "name": "大模型管理 (插件)",
+    "children": []
+  },
+  {
+    "index": 18,
+    "name": "代码生成演示",
+    "children": []
+  },
+  {
+    "index": 19,
+    "name": "cms管理 (插件)",
+    "children": []
+  },
+  {
+    "index": 20,
+    "name": "商城应用(插件)",
+    "children": []
+  },
+  {
+    "index": 21,
+    "name": "多租户版",
+    "page": "multi_tenant"
+  }
+]

@@ -13,6 +13,9 @@ class Right extends StatefulWidget {
 class RightState extends State<Right> with TickerProviderStateMixin {
   late ScrollController _scrollController2;
 
+  /// 页面缓存（防止切换重建）
+  final Map<int, Widget> _pageCache = {};
+
   @override
   void initState() {
     super.initState();
@@ -21,159 +24,299 @@ class RightState extends State<Right> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: Column(children: [toolbar(), Expanded(child: _visiblePage())]));
+    return Expanded(
+      child: Column(
+        children: [
+          toolbar(),
+          // Expanded(child: _visiblePage()),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: _visiblePage(),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 
-  Widget container(text) => Container(alignment: Alignment.center, child: Text(text, style: const TextStyle(fontSize: 18)));
-
+  Widget container(text) => Container(
+        alignment: Alignment.center,
+        child: Text(text, style: const TextStyle(fontSize: 18)),
+      );
   Widget _visiblePage() {
     return Rx.custom(
-      deps: [Core.instance.pageAction],
+      deps: [Core.instance.pageAction, Core.instance.selectedNodeIndex],
       builder: () {
-        final snapshotData = Core.instance.pageAction.value;
-        try {
-          final entry2 = Core.instance.pageMap.value.entries.firstWhere((entry) => entry.value.index == snapshotData);
-          return entry2.value.widget;
-        } catch (e) {
-          return container("No page found");
+        final selectedIndex = Core.instance.selectedNodeIndex.value;
+
+        if (selectedIndex == -1) {
+          _pageCache.clear();
+          return _buildWelcomePage();
         }
+
+        final page = Core.instance.pageMap.value[selectedIndex];
+        if (page == null) {
+          _pageCache.clear();
+          return _buildWelcomePage();
+        }
+
+        return _pageCache.putIfAbsent(
+          page.index,
+          () => page.builder(),
+        );
       },
     );
   }
 
-  Color? foregroundColor(Set<WidgetState> states) {
-    if (states.contains(WidgetState.focused) || states.contains(WidgetState.hovered)) {
-      return Colors.white;
-    }
-    return null;
+  /// ================= 页面显示 =================
+
+// 优化欢迎页
+  Widget _buildWelcomePage() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: Colors.blue.withOpacity(0.05),
+              shape: BoxShape.circle,
+            ),
+            child: const FlutterLogo(size: 80),
+          ),
+          const SizedBox(height: 24),
+          const Text(
+            "欢迎使用后台管理系统",
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF2D3748),
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            "请从左侧菜单选择功能开始工作",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey.shade500,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
-  Widget text(text) => Text(text, style: const TextStyle(fontFamily: 'WorkSans', letterSpacing: 0.2, fontWeight: FontWeight.w400, color: Color(0xFF4A6572), fontSize: 14));
+// 优化Right组件build
 
-  Color? overlayColor(Set<WidgetState> states) {
-    if (states.contains(WidgetState.focused)) {
-      return Colors.grey.withAlpha(255);
-    }
-    if (states.contains(WidgetState.hovered)) {
-      return Colors.blue[200];
-    }
-    return null;
-  }
-
-  @override
-  void dispose() {
-    _scrollController2.dispose();
-    super.dispose();
-  }
-
-  Widget toolbar() {
+  Widget toolbar22() {
     return Rx.custom(
-      deps: [Core.instance.btnAction, Core.instance.pageMap, Core.instance.selectedNodeIndex],
+      deps: [
+        Core.instance.activePageKeys,
+        Core.instance.selectedNodeIndex,
+        Core.instance.pageMap,
+        Core.instance.isSidebarCollapsed,
+      ],
       builder: () {
-        print("toolbar builder 执行");
-        final activePages = Core.instance.pageMap.value.entries.where((entry) => entry.value.isActive).toList();
-        if (activePages.isEmpty) {
-          return Container();
-        }
+        final activePages = Core.instance.activePageKeys.value.map((k) => Core.instance.pageMap.value[k]).whereType<PageInfo>().toList();
         return Container(
-          margin: const EdgeInsets.only(top: 6, bottom: 6),
-          child: SingleChildScrollView(
-            controller: _scrollController2,
-            primary: false,
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: activePages.map((entry) {
-                return Container(
-                  height: 24.0 * 1.0,
-                  margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                  decoration: BoxDecoration(
-                    color: entry.value.index == Core.instance.selectedNodeIndex.value ? Core.instance.selectedColor : Colors.white,
-                    borderRadius: const BorderRadius.all(Radius.circular(4)),
-                  ),
+          height: 56,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              bottom: BorderSide(color: Colors.grey.shade200, width: 1),
+            ),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Row(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  controller: _scrollController2,
+                  scrollDirection: Axis.horizontal,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: 24.0,
-                        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                        decoration: BoxDecoration(
-                          color: entry.value.index == Core.instance.selectedNodeIndex.value ? Core.instance.selectedColor : Colors.white,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
+                    children: activePages.map((page) {
+                      final isSelected = page.index == Core.instance.selectedNodeIndex.value;
+
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8),
                         child: Material(
                           color: Colors.transparent,
-                          child: Row(
-                            children: [
-                              // 点击标题部分
-                              InkWell(
-                                borderRadius: BorderRadius.circular(4),
-                                onTap: () => _handleSelection(entry),
-                                child: Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0), child: text(entry.value.title)),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(8),
+                            onTap: () => _handleSelection(page),
+                            child: Container(
+                              height: 40,
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              decoration: BoxDecoration(
+                                color: isSelected ? Colors.blue.shade50 : Colors.grey.shade50,
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                              // 分隔间距
-                              const SizedBox(width: 4),
-                              // 点击关闭图标
-                              InkWell(
-                                borderRadius: BorderRadius.circular(20),
-                                onTap: () => _handleIconButton(entry),
-                                child: Padding(padding: const EdgeInsets.all(4.0), child: Icon(Icons.close_outlined, size: 12, color: Colors.grey[700])),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  if (page.icon != null)
+                                    Icon(
+                                      page.icon,
+                                      size: 16,
+                                      color: isSelected ? Colors.blue.shade600 : Colors.grey.shade600,
+                                    ),
+                                  if (page.icon != null) const SizedBox(width: 6),
+                                  Text(
+                                    page.title,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                                      color: isSelected ? Colors.blue.shade700 : Colors.grey.shade700,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  InkWell(
+                                    onTap: () => _handleIconButton(page),
+                                    borderRadius: BorderRadius.circular(4),
+                                    child: Icon(
+                                      Icons.close,
+                                      size: 16,
+                                      color: Colors.grey.shade600,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      );
+                    }).toList(),
                   ),
-                );
-              }).toList(),
-            ),
+                ),
+              ),
+            ],
           ),
         );
       },
     );
   }
 
-  void _handleSelection(MapEntry<int, PageInfo> entry) {
-    int k = entry.value.index;
-    Core.instance.selectedNodeIndex.value = k;
-    Core.instance.notifyBtns(k);
-    Core.instance.notifyPage(k);
-    Core.instance.notifyItem(k);
+  Widget toolbar() {
+    return Rx.custom(
+      deps: [
+        Core.instance.activePageKeys,
+        Core.instance.selectedNodeIndex,
+        Core.instance.pageMap,
+        Core.instance.isSidebarCollapsed,
+      ],
+      builder: () {
+        final activePages = Core.instance.activePageKeys.value.map((k) => Core.instance.pageMap.value[k]).whereType<PageInfo>().toList();
+        return Container(
+          height: 50,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              bottom: BorderSide(color: Colors.grey.shade200),
+            ),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Row(
+            children: [
+              const SizedBox(width: 8),
+              Expanded(
+                child: SingleChildScrollView(
+                  controller: _scrollController2,
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: activePages.map((page) {
+                      final isSelected = page.index == Core.instance.selectedNodeIndex.value;
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(8),
+                            onTap: () => _handleSelection(page),
+                            child: Container(
+                              height: 42,
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              decoration: BoxDecoration(
+                                color: isSelected ? Core.instance.selectedColor ?? Colors.blue[100] : Colors.grey[100],
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: isSelected ? Colors.blue : Colors.grey[300]!,
+                                  width: isSelected ? 1.5 : 1,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  if (page.icon != null)
+                                    Icon(
+                                      page.icon,
+                                      size: 16,
+                                      color: isSelected ? Colors.blue.shade600 : Colors.grey.shade600,
+                                    ),
+                                  if (page.icon != null) const SizedBox(width: 6),
+                                  Text(page.title),
+                                  const SizedBox(width: 12),
+                                  InkWell(
+                                    onTap: () => _handleIconButton(page),
+                                    child: const Icon(Icons.close, size: 16),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
-  void _handleIconButton(MapEntry<int, PageInfo> entry) {
-    print("mygod.........+++.......");
-    print(entry.value.isActive.toString());
-    print(entry.value.toString());
-    // entry.value.isActive = false; // 直接修改，应该通过 Core 更新
-    try {
-      // final activeEntry = Core.instance.pageMap.value.entries.firstWhere((entry) => entry.value.isActive);
-      // int k = activeEntry.value.index;
-      // print(k.toString());
-      // Core.instance.selectedNodeIndex.value = k;
-      // Core.instance.notifyItem(k);
-      // Core.instance.notifyPage(k);
-      // Core.instance.notifyBtns(k);
+  /// ================= 事件 =================
 
-      //  使用 updatePageInfo 来更新 isActive
-      final updatedEntry = entry.value.copyWith(isActive: false);
-      Core.instance.updatePageInfo(entry.key, updatedEntry);
+  /// 切换页面
+  void _handleSelection(PageInfo page) {
+    Core.instance.selectedNodeIndex.value = page.index;
+    Core.instance.openPage(page.index);
+  }
 
-      //  如果关闭的是当前选中的，需要更新选中项
-      if (entry.value.index == Core.instance.selectedNodeIndex.value) {
-        //  找到第一个激活的页面并选中它
-        final activeEntry = Core.instance.pageMap.value.entries.firstWhere(
-          (entry) => entry.value.isActive,
-          orElse: () => MapEntry(-1, PageInfo(index: -1, title: 'None', widget: Container())), // 默认值
-        );
-        Core.instance.selectedNodeIndex.value = activeEntry.value.index;
-        Core.instance.notifyBtns(activeEntry.value.index);
-        Core.instance.notifyPage(activeEntry.value.index);
-        Core.instance.notifyItem(activeEntry.value.index);
-      }
-    } catch (e) {
-      Core.instance.notifyPage(-1);
-      Core.instance.notifyBtns(-1);
-    }
+  /// 关闭页面
+  void _handleIconButton(PageInfo page) {
+    // 1. 释放缓存
+    _pageCache.remove(page.index);
+
+    // 2. 关闭页面（统一走 Core 的方法）
+    Core.instance.closePage(page.index);
+  }
+
+  /// ================= UI =================
+
+  Widget text(text) => Text(
+        text,
+        style: const TextStyle(
+          fontFamily: 'WorkSans',
+          letterSpacing: 0.2,
+          fontWeight: FontWeight.w400,
+          color: Color(0xFF4A6572),
+          fontSize: 14,
+        ),
+      );
+
+  @override
+  void dispose() {
+    _scrollController2.dispose();
+    super.dispose();
   }
 }

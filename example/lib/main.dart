@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:rxflare/rxflare.dart';
 
+import 'LoginPage.dart';
+import 'auth.dart';
 import 'home.dart';
 import 'not_found.dart';
 
@@ -27,16 +30,35 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  // @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //       title: 'UI管理框架',
+  //       theme: ThemeData(
+  //         canvasColor: Colors.transparent,
+  //       ),
+  //       debugShowCheckedModeBanner: false,
+  //       initialRoute: 'main',
+  //       onGenerateRoute: _routeGenerator);
+  // }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'UI管理框架',
-        theme: ThemeData(
-          canvasColor: Colors.transparent,
-        ),
-        debugShowCheckedModeBanner: false,
-        initialRoute: 'main',
-        onGenerateRoute: _routeGenerator);
+    return Rx.custom(
+      deps: [Auth.isLoggedIn],
+      builder: () {
+        final loggedIn = Auth.isLoggedIn.value;
+
+        return MaterialApp(
+          title: 'UI管理框架',
+          theme: ThemeData(
+            canvasColor: Colors.transparent,
+          ),
+          debugShowCheckedModeBanner: false,
+          home: loggedIn ? const Home() :   LoginPage(), // 👈 推荐
+          onGenerateRoute: _routeGenerator,
+        );
+      },
+    );
   }
 
   Route _routeGenerator(RouteSettings settings) {
