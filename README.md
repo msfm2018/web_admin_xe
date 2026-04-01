@@ -16,7 +16,7 @@
 
 
 
-## 使用方法 两步
+## 手写路由表 使用方法 两步
 
 # 第一、assets目录下 随意 定义menu.json文件
 ```
@@ -63,4 +63,31 @@
     "a3": () =>  AdminDashboardPage(),
   };
 
+  ```
+
+
+# 自动生成路由表 route_mapper.dart  根据view下的文件自动生成路由表
+ ```
+  根目录 下运行  dart gen_route.dart 
+                 自动生成 route_mapper.dart文件
+
+       条件：
+       1. assets目录下 menu.json文件 中 page字段要和view目录下的文件的类名一致
+
+       例如 class P1 extends StatelessWidget {
+              const P1({super.key});
+              @override
+              Widget build(BuildContext context) {
+                return Text("P1");
+              }
+            }
+      
+       json 文件 
+          {
+            "index": 1,
+            "name": "首页",
+            "page": "P1",  //这里要一致
+            "icon": "home"
+          },
+      
   ```
