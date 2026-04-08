@@ -60,7 +60,7 @@ class RightState extends State<Right> with TickerProviderStateMixin {
     );
   }
 
-  Widget container(text) => Container(
+  Widget container(String text) => Container(
         alignment: Alignment.center,
         child: Text(text, style: const TextStyle(fontSize: 18)),
       );
@@ -240,7 +240,7 @@ class RightState extends State<Right> with TickerProviderStateMixin {
 
   /// ================= UI =================
 
-  Widget text(text) => Text(
+  Widget text(String text) => Text(
         text,
         style: const TextStyle(
           fontFamily: 'WorkSans',

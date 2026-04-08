@@ -1,6 +1,6 @@
 name: simple_tree
 description: "A highly performant and reactive tree structure widget for Flutter, built with rxflare for efficient state management and rendering."
-version: 1.1.1
+version: 1.1.2
 homepage: https://github.com/msfm2018/simple_tree
 repository: https://github.com/msfm2018/simple_tree
 
