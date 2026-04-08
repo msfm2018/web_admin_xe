@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -13,8 +13,8 @@ class DashboardPage extends StatelessWidget {
         child: Column(
           children: [
             /// 顶部统计卡片
-            Row(
-              children: const [
+            const Row(
+              children: [
                 Expanded(child: StatCard(title: "用户访问量", value: "6,666", color: Colors.blue)),
                 SizedBox(width: 12),
                 Expanded(child: StatCard(title: "系统消息", value: "168", color: Colors.green)),
@@ -65,8 +65,8 @@ class DashboardPage extends StatelessWidget {
   /// 折线图
   LineChartData _lineChartData() {
     return LineChartData(
-      gridData: FlGridData(show: true),
-      titlesData: FlTitlesData(show: true),
+      gridData: const FlGridData(show: true),
+      titlesData: const FlTitlesData(show: true),
       borderData: FlBorderData(show: false),
       lineBarsData: [
         LineChartBarData(
@@ -84,7 +84,7 @@ class DashboardPage extends StatelessWidget {
           barWidth: 3,
           belowBarData: BarAreaData(
             show: true,
-            color: Colors.teal.withOpacity(0.2),
+            color: Colors.teal.withValues(alpha:0.2),
           ),
         ),
         LineChartBarData(

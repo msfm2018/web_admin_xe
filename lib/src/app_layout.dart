@@ -59,7 +59,7 @@ class TreeWidget extends StatelessWidget {
                 },
               ),
               // 右侧主内容区域
-              Right()
+              Right(),
               // const Expanded(child: Right()),
             ],
           );

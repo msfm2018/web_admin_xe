@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:simple_tree/simple_tree.dart';
 
 import '../route_mapper.dart';
@@ -21,7 +20,7 @@ class MenuProcessor {
               title: node.name,
               builder: builder,
               // 👇 自动把菜单 icon 带给页面（可选，不传递也不报错）
-              icon: node.icon != null ? node.icon : null ,
+              icon: node.icon ,
             ));
           }
         }

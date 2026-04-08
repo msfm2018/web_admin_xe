@@ -54,7 +54,7 @@ class RightState extends State<Right> with TickerProviderStateMixin {
                 child: _visiblePage(),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -107,7 +107,7 @@ class RightState extends State<Right> with TickerProviderStateMixin {
           Container(
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: Colors.blue.withOpacity(0.05),
+              color: Colors.blue.withValues(alpha:0.05),
               shape: BoxShape.circle,
             ),
             child: const FlutterLogo(size: 80),

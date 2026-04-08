@@ -6,7 +6,7 @@ void main() async {
   final outputFile = File('lib/route_mapper.dart');
 
   if (!await viewDir.exists()) {
-    print('错误: 找不到 lib/view 目录');
+    // print('错误: 找不到 lib/view 目录');
     return;
   }
 
@@ -58,5 +58,5 @@ void main() async {
 
   // 4. 写入文件
   await outputFile.writeAsString(buffer.toString());
-  print('✅ 路由映射表已自动生成: ${outputFile.path}');
+  // print('✅ 路由映射表已自动生成: ${outputFile.path}');
 }

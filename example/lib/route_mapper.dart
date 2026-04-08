@@ -1,8 +1,8 @@
 // 专门的路由映射表，与 UI 逻辑分离
 import 'package:flutter/material.dart';
 
-import 'view/AdminDashboardPage.dart';
-import 'view/DashboardPage.dart';
+import 'view/admin_dashboard_page.dart';
+import 'view/dashboard_page.dart';
 import 'view/p_1.dart';
 import 'view/p_2.dart';
 import 'view/p_indexstack.dart';
@@ -14,7 +14,7 @@ class RouteMapper {
     "role": () => const P2(),
     "test": () => const TestIndexStack(),
     "DashboardChart": () => const   DashboardChart(),
-    "AdminDashboardPage": () =>  AdminDashboardPage(),
+    "AdminDashboardPage": () =>  const AdminDashboardPage(),
   };
 
   static Widget? getPage(String? key) {

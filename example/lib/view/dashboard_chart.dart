@@ -27,7 +27,7 @@ class DashboardChart extends StatelessWidget {
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
-                getTitlesWidget: (value, meta) => Text("${value.toInt() + 3}-01", style: TextStyle(fontSize: 10)),
+                getTitlesWidget: (value, meta) => Text("${value.toInt() + 3}-01", style: const TextStyle(fontSize: 10)),
               ),
             ),
             // 左侧轴：显示金额 (0 - 180,000)
@@ -77,9 +77,9 @@ class DashboardChart extends StatelessWidget {
           // 如果要追求图片中那种细柱子，也可以在 Stack 里底层放 BarChart，顶层放 LineChart
           extraLinesData: ExtraLinesData(
             verticalLines: [
-              VerticalLine(x: 3, color: Colors.blue.withOpacity(0.8), strokeWidth: 15), // 模拟 03-13 的大柱子
-              VerticalLine(x: 5, color: Colors.blue.withOpacity(0.8), strokeWidth: 10),
-              VerticalLine(x: 8, color: Colors.blue.withOpacity(0.8), strokeWidth: 12),
+              VerticalLine(x: 3, color: Colors.blue.withValues(alpha:0.8), strokeWidth: 15), // 模拟 03-13 的大柱子
+              VerticalLine(x: 5, color: Colors.blue.withValues(alpha:0.8), strokeWidth: 10),
+              VerticalLine(x: 8, color: Colors.blue.withValues(alpha:0.8), strokeWidth: 12),
             ],
           ),
           

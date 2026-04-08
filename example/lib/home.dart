@@ -129,7 +129,7 @@ Widget _buildIconItem({
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Tooltip(
             message: tooltip, // 👈 关键：提示文字
-            waitDuration: Duration(milliseconds: 300), // 可选：延迟显示
+            waitDuration: const Duration(milliseconds: 300), // 可选：延迟显示
             child: InkWell(
               borderRadius: BorderRadius.circular(8),
               hoverColor: Colors.white12,
@@ -137,7 +137,7 @@ Widget _buildIconItem({
               child: Container(
                 decoration: BoxDecoration(
                   color: isHovering
-                      ? Colors.blue.withOpacity(0.2)
+                      ? Colors.blue.withValues(alpha:0.2)
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -155,48 +155,5 @@ Widget _buildIconItem({
     },
   );
 }
-  Widget _buildIconItem1({
-    required IconData icon,
-    required VoidCallback onTap,
-  }) {
-    bool isHovering = false;
 
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return MouseRegion(
-          onEnter: (_) => setState(() => isHovering = true),
-          onExit: (_) => setState(() => isHovering = false),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(8),
-              hoverColor: Colors.white12,
-              onTap: onTap,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: isHovering ? Colors.blue.withOpacity(0.2) : Colors.transparent,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                padding: const EdgeInsets.all(12),
-                child: Icon(
-                  icon,
-                  size: 24,
-                  color: isHovering ? Colors.blue : Colors.white70,
-                ),
-              ),
-              // child: Padding(
-              //   padding: const EdgeInsets.all(12),
-              //   child: Icon(
-              //     icon,
-              //     size: 24,
-              //     // color: isHovering ? Colors.white : Colors.white70, // 👈 关键
-              //     color: isHovering ? Colors.blue : Colors.white70,
-              //   ),
-              // ),
-            ),
-          ),
-        );
-      },
-    );
-  }
 }

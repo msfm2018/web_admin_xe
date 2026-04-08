@@ -3,7 +3,10 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+
 class AdminDashboardPage extends StatelessWidget {
+  const AdminDashboardPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +70,7 @@ Widget _buildFilterBar() {
         const SizedBox(width: 10),
 
         // 2. 日期范围选择 (这里用简单的 TextField 模拟图片外观)
-        Container(
+        SizedBox(
           width: 200,
           height: 32,
           child: TextField(
@@ -108,7 +111,7 @@ Widget _buildFilterBar() {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(4),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10)],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha:0.05), blurRadius: 10)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,7 +185,7 @@ DataRow _buildStaticRow(String id, String imgUrl, String name, String views, Str
       ),
     ),
     DataCell(
-      Container(
+      SizedBox(
         width: 250, // 限制名称宽度，防止表格过宽
         child: Text(
           name,
@@ -254,7 +257,7 @@ class DashboardChart extends StatelessWidget {
             LineChartBarData(
               spots: const [FlSpot(0, 130000), FlSpot(1, 100000), FlSpot(2, 70000), FlSpot(3, 140000), FlSpot(4, 180000), FlSpot(5, 120000)],
               isCurved: true,
-              color: Colors.purple.withOpacity(0.6),
+              color: Colors.purple.withValues(alpha:0.6),
               barWidth: 2,
               dotData: const FlDotData(show: false),
             ),
@@ -270,9 +273,9 @@ class DashboardChart extends StatelessWidget {
           // 模拟图片中的蓝色背景条 (柱状效果)
           extraLinesData: ExtraLinesData(
             verticalLines: [
-              VerticalLine(x: 3, color: Colors.blue.withOpacity(0.8), strokeWidth: 20),
-              VerticalLine(x: 4.5, color: Colors.blue.withOpacity(0.8), strokeWidth: 10),
-              VerticalLine(x: 7, color: Colors.blue.withOpacity(0.8), strokeWidth: 15),
+              VerticalLine(x: 3, color: Colors.blue.withValues(alpha:0.8), strokeWidth: 20),
+              VerticalLine(x: 4.5, color: Colors.blue.withValues(alpha:0.8), strokeWidth: 10),
+              VerticalLine(x: 7, color: Colors.blue.withValues(alpha:0.8), strokeWidth: 15),
             ],
           ),
 

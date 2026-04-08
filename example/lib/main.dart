@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
             canvasColor: Colors.transparent,
           ),
           debugShowCheckedModeBanner: false,
-          home: loggedIn ? const Home() :   LoginPage(), // 👈 推荐
+          home: loggedIn ? const Home() :   const LoginPage(), // 👈 推荐
           onGenerateRoute: _routeGenerator,
         );
       },
