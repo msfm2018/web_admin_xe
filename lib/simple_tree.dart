@@ -1,5 +1,3 @@
-// lib/simple_tree.dart
-
 export 'src/core.dart';
 export 'src/left_tree.dart';
 export 'src/right.dart';

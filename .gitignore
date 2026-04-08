@@ -1,0 +1,63 @@
+# =============================
+# Flutter / Dart 默认忽略
+# =============================
+
+# Dart / Pub build
+.dart_tool/
+.packages
+pubspec.lock
+
+# Generated files
+*.g.dart
+*.freezed.dart
+*.mocks.dart
+
+# Build directories
+build/
+ios/Flutter/Flutter.framework/
+ios/Flutter/Flutter.podspec
+ios/Flutter/Flutter.podspec.lock
+ios/Flutter/Generated.xcconfig
+ios/Pods/
+ios/Runner.xcworkspace/
+android/.gradle/
+android/app/build/
+android/local.properties
+android/.idea/
+.idea/
+*.iml
+
+# VS Code / JetBrains
+.vscode/
+*.code-workspace
+
+# macOS/Linux generated
+.macos/
+.linux/
+.windows/
+
+# =============================
+# 临时文件
+# =============================
+*.log
+*.tmp
+*.swp
+*.DS_Store
+example/ios/Flutter/ephemeral/
+example/ios/Flutter/Generated.xcconfig
+example/ios/Flutter/flutter_export_environment.sh
+example/ios/Runner/GeneratedPluginRegistrant.*
+example/macos/Flutter/ephemeral/
+example/macos/Flutter/GeneratedPluginRegistrant.swift
+example/linux/flutter/generated_plugin_registrant.*
+example/linux/flutter/generated_plugins.cmake
+example/windows/flutter/generated_plugin_registrant.*
+example/windows/flutter/generated_plugins.cmake
+example/ios/
+example/android/
+example/linux/
+example/macos/
+example/windows/
+example/build/
+# 忽略所有 build 产物
+**/build/

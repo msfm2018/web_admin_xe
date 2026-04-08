@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rxflare/rxflare.dart';
 
-import 'LoginPage.dart';
+import 'login_page.dart';
 import 'auth.dart';
 import 'home.dart';
 import 'not_found.dart';

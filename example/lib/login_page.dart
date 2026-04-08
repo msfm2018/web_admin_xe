@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:web_admin/auth.dart';
+
+import 'auth.dart';
 
 class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +17,7 @@ class LoginPage extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 20)],
+            boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 20)],
           ),
           child: Row(
             children: [
@@ -31,7 +34,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     // 这里可以放你的 sw.6e51dfbf.png 图片作为背景
                     image: DecorationImage(
-                      image: AssetImage('assets/bg.png'),
+                      image: AssetImage('assets/images/bg.png'),
                       fit: BoxFit.cover,
                     ),
                   ),
