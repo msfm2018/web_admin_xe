@@ -1,4 +1,8 @@
 # Changelog
+## 1.1.1
+* 🛠 Fixes: Resolved lint warnings and deprecated API usage (withOpacity to withValues).
+* 📏 Naming: Normalized file naming to follow Dart's lower_case_with_underscores convention.
+* 📝 Docs: Continued improvement of API documentation.
 
 ## 1.1.0
 

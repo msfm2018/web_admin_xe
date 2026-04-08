@@ -33,10 +33,10 @@ class LoginPage extends StatelessWidget {
                       end: Alignment.bottomRight,
                     ),
                     // 这里可以放你的 sw.6e51dfbf.png 图片作为背景
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/bg.png'),
-                      fit: BoxFit.cover,
-                    ),
+                    // image: DecorationImage(
+                    //   image: AssetImage('assets/images/bg.png'),
+                    //   fit: BoxFit.cover,
+                    // ),
                   ),
                   child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
