@@ -1,9 +1,9 @@
-# web_admin_xe 
+# simple_tree_xe 
 
 配置flutter 环境
 
 
-cd web_admin_xe
+cd simple_tree_xe
 
 flutter create . 
 

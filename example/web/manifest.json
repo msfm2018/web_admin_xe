@@ -1,6 +1,6 @@
 {
-    "name": "web_admin",
-    "short_name": "web_admin",
+    "name": "simple_tree",
+    "short_name": "simple_tree",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
