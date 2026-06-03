@@ -3,30 +3,36 @@ import 'package:rxflare/rxflare.dart';
 import 'page_info.dart';
 import 'core.dart';
 
-/// 右侧内容容器组件。
+/// Right-side content container widget.
 ///
-/// 该组件实现了典型的管理后台布局：
-/// 1. **顶部工具栏 (Toolbar)**: 展示已打开页面的标签，支持点击切换和点击关闭。
-/// 2. **主显示区 (Content Area)**: 渲染当前选中的页面，并内置了页面缓存机制以提升性能。
+/// This widget implements a typical admin dashboard layout:
+/// 
+/// 1. **Toolbar**: Displays opened pages as tabs, supporting selection and closing.
+/// 2. **Content Area**: Renders the currently selected page with built-in caching
+///    to improve performance.
 class Right extends StatefulWidget {
-  /// 创建一个 [Right] 组件。
+  /// Creates a [Right] widget.
   const Right({super.key});
 
   @override
   State<Right> createState() => RightState();
 }
 
-/// [Right] 组件的状态管理类。
+/// State class for [Right].
 ///
-/// 负责维护页面缓存 [_pageCache] 以及标签栏的横向滚动控制。
+/// Responsible for managing page caching [_pageCache]
+/// and horizontal scrolling of the tab bar.
 class RightState extends State<Right> with TickerProviderStateMixin {
-  /// 标签栏的滚动控制器。
+  /// Scroll controller for the tab bar.
   late ScrollController _scrollController2;
 
-  /// 页面缓存映射表。
+  /// Page cache map.
   ///
-  /// Key 为页面索引，Value 为已构建的 Widget。
-  /// 缓存机制确保了在切换标签时，页面状态（如滚动位置、输入内容）得以保留，避免重复触发 [PageInfo.builder]。
+  /// Key: page index  
+  /// Value: built widget instance
+  ///
+  /// This cache ensures that page state (e.g., scroll position, input data)
+  /// is preserved when switching tabs, avoiding repeated calls to [PageInfo.builder].
   final Map<int, Widget> _pageCache = {};
 
   @override
@@ -40,9 +46,10 @@ class RightState extends State<Right> with TickerProviderStateMixin {
     return Expanded(
       child: Column(
         children: [
-          // 渲染多标签导航栏
+          // Tab toolbar
           toolbar(),
-          // 渲染主内容区域，带有一致的边距和圆角装饰
+
+          // Main content area with padding and rounded styling
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -60,32 +67,34 @@ class RightState extends State<Right> with TickerProviderStateMixin {
     );
   }
 
-  Widget container(String text) => Container(
-        alignment: Alignment.center,
-        child: Text(text, style: const TextStyle(fontSize: 18)),
-      );
-
-  /// 构建当前可见的页面内容。
+  /// Builds the currently visible page.
   ///
-  /// 监听 [Core.pageAction] 和 [Core.selectedNodeIndex] 的变化。
-  /// 如果没有选中任何节点（index == -1），则显示欢迎页面。
+  /// Listens to [Core.pageAction] and [Core.selectedNodeIndex].
+  /// If no page is selected (index == -1), a welcome page is displayed.
   Widget _visiblePage() {
     return Rx.custom(
-      deps: [Core.instance.pageAction, Core.instance.selectedNodeIndex],
+      deps: [
+        Core.instance.pageAction,
+        Core.instance.selectedNodeIndex
+      ],
       builder: () {
-        final selectedIndex = Core.instance.selectedNodeIndex.value;
+        final selectedIndex =
+            Core.instance.selectedNodeIndex.value;
 
         if (selectedIndex == -1) {
           _pageCache.clear();
           return _buildWelcomePage();
         }
 
-        final page = Core.instance.pageMap.value[selectedIndex];
+        final page =
+            Core.instance.pageMap.value[selectedIndex];
+
         if (page == null) {
           _pageCache.clear();
           return _buildWelcomePage();
         }
-// 使用 putIfAbsent 确保每个页面只被 builder 构建一次
+
+        // Ensure each page is built only once
         return _pageCache.putIfAbsent(
           page.index,
           () => page.builder(),
@@ -94,27 +103,28 @@ class RightState extends State<Right> with TickerProviderStateMixin {
     );
   }
 
-  /// ================= 页面显示 =================
+  /// ================= Page Display =================
 
-  /// 构建默认的欢迎页面。
+  /// Builds the default welcome page.
   ///
-  /// 当未打开任何标签页或初始进入系统时显示。
+  /// Displayed when no page is selected or no tabs are open.
   Widget _buildWelcomePage() {
     return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment:
+            MainAxisAlignment.center,
         children: [
           Container(
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: Colors.blue.withValues(alpha:0.05),
+              color: Colors.blue.withValues(alpha: 0.05),
               shape: BoxShape.circle,
             ),
             child: const FlutterLogo(size: 80),
           ),
           const SizedBox(height: 24),
           const Text(
-            "欢迎使用后台管理系统",
+            "Welcome to the Admin Dashboard",
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -123,7 +133,7 @@ class RightState extends State<Right> with TickerProviderStateMixin {
           ),
           const SizedBox(height: 12),
           Text(
-            "请从左侧菜单选择功能开始工作",
+            "Please select a feature from the left menu to get started",
             style: TextStyle(
               fontSize: 14,
               color: Colors.grey.shade500,
@@ -134,10 +144,12 @@ class RightState extends State<Right> with TickerProviderStateMixin {
     );
   }
 
-  /// 构建多标签工具栏。
+  /// Builds the tab toolbar.
   ///
-  /// 这是一个响应式组件，当 [activePageKeys] 或选中状态改变时自动刷新。
-  /// 内部包含一个可横向滚动的 [SingleChildScrollView] 以容纳多个标签。
+  /// This is a reactive widget that updates when
+  /// [activePageKeys] or selection state changes.
+  ///
+  /// It contains a horizontally scrollable tab list.
   Widget toolbar() {
     return Rx.custom(
       deps: [
@@ -147,16 +159,22 @@ class RightState extends State<Right> with TickerProviderStateMixin {
         Core.instance.isSidebarCollapsed,
       ],
       builder: () {
-        final activePages = Core.instance.activePageKeys.value.map((k) => Core.instance.pageMap.value[k]).whereType<PageInfo>().toList();
+        final activePages = Core.instance.activePageKeys.value
+            .map((k) => Core.instance.pageMap.value[k])
+            .whereType<PageInfo>()
+            .toList();
+
         return Container(
           height: 50,
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border(
-              bottom: BorderSide(color: Colors.grey.shade200),
+              bottom:
+                  BorderSide(color: Colors.grey.shade200),
             ),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding:
+              const EdgeInsets.symmetric(horizontal: 12),
           child: Row(
             children: [
               const SizedBox(width: 8),
@@ -166,41 +184,75 @@ class RightState extends State<Right> with TickerProviderStateMixin {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: activePages.map((page) {
-                      final isSelected = page.index == Core.instance.selectedNodeIndex.value;
+                      final isSelected =
+                          page.index ==
+                              Core.instance
+                                  .selectedNodeIndex
+                                  .value;
 
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        padding:
+                            const EdgeInsets.symmetric(
+                                horizontal: 4),
                         child: Material(
                           color: Colors.transparent,
                           child: InkWell(
-                            borderRadius: BorderRadius.circular(8),
-                            onTap: () => _handleSelection(page),
+                            borderRadius:
+                                BorderRadius.circular(8),
+                            onTap: () =>
+                                _handleSelection(page),
                             child: Container(
                               height: 42,
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              padding:
+                                  const EdgeInsets
+                                      .symmetric(
+                                          horizontal: 16),
                               decoration: BoxDecoration(
-                                color: isSelected ? Core.instance.selectedColor ?? Colors.blue[100] : Colors.grey[100],
-                                borderRadius: BorderRadius.circular(8),
+                                color: isSelected
+                                    ? Core.instance
+                                            .selectedColor ??
+                                        Colors.blue[100]
+                                    : Colors.grey[100],
+                                borderRadius:
+                                    BorderRadius.circular(
+                                        8),
                                 border: Border.all(
-                                  color: isSelected ? Colors.blue : Colors.grey[300]!,
-                                  width: isSelected ? 1.5 : 1,
+                                  color: isSelected
+                                      ? Colors.blue
+                                      : Colors.grey[300]!,
+                                  width: isSelected
+                                      ? 1.5
+                                      : 1,
                                 ),
                               ),
                               child: Row(
-                                mainAxisSize: MainAxisSize.min,
+                                mainAxisSize:
+                                    MainAxisSize.min,
                                 children: [
                                   if (page.icon != null)
                                     Icon(
                                       page.icon,
                                       size: 16,
-                                      color: isSelected ? Colors.blue.shade600 : Colors.grey.shade600,
+                                      color: isSelected
+                                          ? Colors.blue
+                                              .shade600
+                                          : Colors.grey
+                                              .shade600,
                                     ),
-                                  if (page.icon != null) const SizedBox(width: 6),
+                                  if (page.icon != null)
+                                    const SizedBox(
+                                        width: 6),
                                   Text(page.title),
-                                  const SizedBox(width: 12),
+                                  const SizedBox(
+                                      width: 12),
                                   InkWell(
-                                    onTap: () => _handleIconButton(page),
-                                    child: const Icon(Icons.close, size: 16),
+                                    onTap: () =>
+                                        _handleIconButton(
+                                            page),
+                                    child: const Icon(
+                                      Icons.close,
+                                      size: 16,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -219,37 +271,22 @@ class RightState extends State<Right> with TickerProviderStateMixin {
     );
   }
 
-  /// ================= 事件 =================
+  /// ================= Events =================
 
-  /// 处理标签选中事件。
+  /// Handles tab selection.
   void _handleSelection(PageInfo page) {
-    Core.instance.selectedNodeIndex.value = page.index;
+    Core.instance.selectedNodeIndex.value =
+        page.index;
     Core.instance.openPage(page.index);
   }
 
-  /// 处理标签关闭事件。
+  /// Handles tab close action.
   ///
-  /// 会同步清理 [_pageCache] 中的对应页面实例。
+  /// Also removes the corresponding page from [_pageCache].
   void _handleIconButton(PageInfo page) {
-    // 1. 释放缓存
     _pageCache.remove(page.index);
-
-    // 2. 关闭页面（统一走 Core 的方法）
     Core.instance.closePage(page.index);
   }
-
-  /// ================= UI =================
-
-  Widget text(String text) => Text(
-        text,
-        style: const TextStyle(
-          fontFamily: 'WorkSans',
-          letterSpacing: 0.2,
-          fontWeight: FontWeight.w400,
-          color: Color(0xFF4A6572),
-          fontSize: 14,
-        ),
-      );
 
   @override
   void dispose() {

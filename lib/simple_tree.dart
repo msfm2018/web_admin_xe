@@ -1,3 +1,8 @@
+/// Core exports for the mbus package.
+///
+/// This file provides a unified public API surface
+/// for consumers of the package.
+
 export 'src/core.dart';
 export 'src/left_tree.dart';
 export 'src/right.dart';

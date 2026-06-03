@@ -1,68 +1,73 @@
-# 历史上最简单的生成树
 
-<p align="center">
-  <img src="https://github.com/msfm2018/simple_tree/blob/1.0.0/index.png?raw=true">
-    <img src="https://github.com/msfm2018/simple_tree/blob/1.0.0/1.png?raw=true">
-</p>
+# Simple Tree
 
-# 生成树方法
+**A lightweight, simple and powerful tree menu component for Flutter Web admin panels.**
 
-## 方法一
+The easiest way to build a beautiful nested sidebar navigation menu in Flutter.
 
-### 一、 定义menu.json文件
+![Demo](https://github.com/msfm2018/simple_tree/blob/1.1.2/index.png?raw=true)
+![Screenshot](https://github.com/msfm2018/simple_tree/blob/1.1.2/1.png?raw=true)
 
-```
-[
-  {
-    "index": 1,
-    "name": "首页",
-    "icon": "home"
-  },
-  {
-    "index": 2,
-    "name": "系统配置",
-    "children": [
-      { "index": 21, "name": "基础设置", "page": "a1" }
-    ]
-  },
- ]
-```
+---
 
-### 二、手动改写 route_mapper.dart
+## Features
 
-```
-static final Map<String, Widget Function()> routes = {
-   "a1": () => const AdminDashboardPage(),
- };
+- Extremely simple JSON configuration
+- Support unlimited nested submenus
+- Two usage modes: **Manual** and **Automatic** (recommended)
+- Built with `rxflare` for reactive state management
+- Designed specifically for Flutter Web admin systems
+- Lightweight with minimal dependencies
 
+---
+
+## Installation
+
+```yaml
+dependencies:
+  simple_tree: ^1.1.3
 ```
 
-## 方法二
+Run:
 
-### 自动生成路由表
-
+```bash
+flutter pub get
 ```
- 运行  dart gen_route.dart   自动生成 route_mapper.dart文件
 
-      条件：
-        json中 page字段 和view下文件 类名一致
+---
 
-      例如：p_1.dart
+## Quick Start
 
-        class P1 extends StatelessWidget {
-             const P1({super.key});
-             @override
-             Widget build(BuildContext context) {
-               return Text("P1");
-             }
-           }
-   
-      json 文件 
-         {
-           "index": 1,
-           "name": "首页",
-           "page": "P1",  ----> 这里要一致
-           "icon": "home"
-         },
-   
+### Method 1: Manual Configuration
+
+1. Create `menu.json`
+2. Manually define `route_mapper.dart`
+
+### Method 2: Automatic Route Generation (Recommended)
+
+1. Put your pages in the `views/` folder
+2. Match the `page` field in JSON with your class name
+3. Run:
+
+```bash
+dart run gen_route.dart
 ```
+
+---
+
+## Example
+
+See the [example](example/) folder for a complete working demo.
+
+---
+
+## Documentation
+
+Detailed usage instructions (Chinese): [中文文档](README_CN.md)
+
+---
+
+## License
+
+MIT License © 2025 [msfm2018](https://github.com/msfm2018)
+

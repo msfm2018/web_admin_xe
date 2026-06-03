@@ -1,45 +1,53 @@
 import 'package:flutter/material.dart';
 
-/// 树节点的数据基础抽象类。
+/// Base abstract class for tree node data.
 ///
-/// 该类定义了树形结构中节点所需的核心属性。所有的节点模型（如 [TreeNode]）
-/// 都必须继承自此类，以确保与 [TreeWidget] 的兼容性。
+/// This class defines the core properties required for a tree structure.
+/// All node models (such as [TreeNode]) must extend this class to ensure
+/// compatibility with components like TreeWidget.
 abstract class TreeBase {
-  /// 节点的显示名称。
+  /// The display name of the node.
   String get name;
 
-  /// 节点的唯一标识索引。
+  /// The unique index identifier of the node.
   int get index;
 
-  /// 节点的自定义文本样式。如果为 null，将使用全局默认样式。
+  /// Custom text style for the node.
+  /// If null, a global default style will be used.
   TextStyle? get style;
 
-  /// 子节点列表。如果是叶子节点，该列表应为空。
+  /// List of child nodes.
+  /// This should be empty for leaf nodes.
   List<TreeBase> get children;
 
-  /// 节点关联的图标数据。
+  /// Icon associated with the node.
   IconData? get icon;
 
-  /// 判断当前节点是否为叶子节点（即没有子节点）。
+  /// Whether this node is a leaf node (i.e., has no children).
   bool get isLeaf => children.isEmpty;
 
-  /// 递归搜索：判断当前节点或其子节点是否包含指定的关键字。
+  /// Recursively checks whether this node or its children
+  /// contain the given keyword.
   ///
-  /// [keyword] 搜索关键字，不区分大小写。
-  /// 如果匹配到当前节点的 [name] 或任意子节点的名称，则返回 true。
+  /// [keyword] is case-insensitive.
+  /// Returns true if the keyword matches this node's [name]
+  /// or any descendant node.
   bool containsKeyword(String keyword) {
     if (keyword.isEmpty) return true;
     final cleanKey = keyword.toLowerCase();
+
     if (name.toLowerCase().contains(cleanKey)) return true;
+
     return children.any((child) => child.containsKeyword(keyword));
   }
 }
 
-/// [TreeBase] 的具体实现类。
+/// Concrete implementation of [TreeBase].
 ///
-/// 支持通过 JSON 数据实例化，并提供了 [copyWith] 方法用于不可变状态的更新。
+/// Supports JSON deserialization and provides a [copyWith]
+/// method for immutable updates.
 class TreeNode extends TreeBase {
-  /// 节点关联的路由页面路径名称。
+  /// Route name associated with this node.
   final String? page;
 
   @override
@@ -57,9 +65,9 @@ class TreeNode extends TreeBase {
   @override
   final IconData? icon;
 
-  /// 创建一个 [TreeNode] 实例。
+  /// Creates a [TreeNode].
   ///
-  /// [index] 和 [name] 是必须填写的。
+  /// Both [index] and [name] are required.
   TreeNode({
     required this.index,
     required this.name,
@@ -69,9 +77,9 @@ class TreeNode extends TreeBase {
     this.icon,
   });
 
-  /// 复制并创建一个新的 [TreeNode] 实例，同时替换部分属性。
+  /// Returns a new [TreeNode] with updated fields.
   ///
-  /// 常用于响应式状态管理中的不可变对象更新。
+  /// Commonly used for immutable state updates.
   TreeNode copyWith({
     String? name,
     List<TreeNode>? children,
@@ -88,24 +96,33 @@ class TreeNode extends TreeBase {
     );
   }
 
-  /// 从 JSON 映射表中解析并创建 [TreeNode] 实例。
+  /// Creates a [TreeNode] from a JSON map.
   ///
-  /// 支持嵌套解析 [children] 字段，并能通过字符串名称映射 [icon]。
+  /// Supports recursive parsing of [children] and
+  /// string-to-[IconData] mapping for [icon].
   factory TreeNode.fromJson(Map<String, dynamic> json) {
     return TreeNode(
       name: json['name'] ?? '',
       index: json['index'] ?? 0,
       page: json['page'],
-      style: json['style'] != null ? TextStyle(color: Color(json['style'] as int)) : null,
+      style: json['style'] != null
+          ? TextStyle(color: Color(json['style'] as int))
+          : null,
       icon: _getIconData(json['icon']),
-      children: json['children'] != null ? (json['children'] as List).map((e) => TreeNode.fromJson(e)).toList() : [],
+      children: json['children'] != null
+          ? (json['children'] as List)
+              .map((e) => TreeNode.fromJson(e))
+              .toList()
+          : [],
     );
   }
 
-  /// 内部辅助方法：将字符串类型的图标名称转换为 Flutter 的 [IconData]。
+  /// Internal helper: converts a string into [IconData].
   ///
-  /// 目前支持: 'home', 'settings', 'user', 'people', 'menu', 'dashboard'。
-  /// 匹配失败时默认返回 [Icons.circle]。
+  /// Supported values:
+  /// 'home', 'settings', 'user', 'people', 'menu', 'dashboard'.
+  ///
+  /// Returns [Icons.circle] if no match is found.
   static IconData? _getIconData(dynamic iconStr) {
     if (iconStr == null) return null;
     if (iconStr is! String) return null;

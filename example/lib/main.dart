@@ -30,17 +30,6 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  // @override
-  // Widget build(BuildContext context) {
-  //   return MaterialApp(
-  //       title: 'UI管理框架',
-  //       theme: ThemeData(
-  //         canvasColor: Colors.transparent,
-  //       ),
-  //       debugShowCheckedModeBanner: false,
-  //       initialRoute: 'main',
-  //       onGenerateRoute: _routeGenerator);
-  // }
   @override
   Widget build(BuildContext context) {
     return Rx.custom(
@@ -54,7 +43,7 @@ class MyApp extends StatelessWidget {
             canvasColor: Colors.transparent,
           ),
           debugShowCheckedModeBanner: false,
-          home: loggedIn ? const Home() :   const LoginPage(), // 👈 推荐
+          home: loggedIn ? const Home() :   const LoginPage(), 
           onGenerateRoute: _routeGenerator,
         );
       },

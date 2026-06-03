@@ -1,16 +1,20 @@
 # Changelog
+## 1.1.3
+
+*  Code Cleanup: Minor internal improvements and code optimizations.
+*  Documentation: Improved inline documentation and comments.
 
 ## 1.1.2
 
-* 🛡 Static Analysis: Fixed "Missing type annotation" lints in lib/src/right.dart to improve type safety and achieve a perfect Pub.dev analysis score.
+*  Static Analysis: Fixed "Missing type annotation" lints in lib/src/right.dart to improve type safety and achieve a perfect Pub.dev analysis score.
 
-* 🛠 Refactoring: Explicitly defined String types for helper methods container() and text().
+*  Refactoring: Explicitly defined String types for helper methods container() and text().
 
 ## 1.1.1
 
-* 🛠 Fixes: Resolved lint warnings and deprecated API usage (withOpacity to withValues).
-* 📏 Naming: Normalized file naming to follow Dart's lower\_case\_with\_underscores convention.
-* 📝 Docs: Continued improvement of API documentation.
+*  Fixes: Resolved lint warnings and deprecated API usage (withOpacity to withValues).
+*  Naming: Normalized file naming to follow Dart's lower\_case\_with\_underscores convention.
+*  Docs: Continued improvement of API documentation.
 
 ## 1.1.0
 
